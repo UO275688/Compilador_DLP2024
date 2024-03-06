@@ -1,0 +1,8 @@
+
+// * Main function
+void main() {
+  int i;
+  i=0;
+}
+
+
