@@ -78,7 +78,6 @@ block returns [List<Statement> ast = new ArrayList<Statement>()]:
 
 type returns [Type ast] locals [ArrayType secondArray]:
         bt=builtInType  {$ast = $bt.ast;}
-
         |t=type('['IC=INT_CONSTANT']')  {$ast=new ArrayType($IC.getLine(), $IC.getCharPositionInLine()+1, $t.ast, LexerHelper.lexemeToInt($IC.text));}
             ('['IC2=INT_CONSTANT']'
                 {
