@@ -1,9 +1,9 @@
 package ast.expressions;
 
-import ast.AbstractASTNode;
 import ast.types.Type;
+import semantic.Visitor;
 
-public class Cast extends AbstractASTNode implements Expression{
+public class Cast extends AbstractExpression implements Expression{
 
     private Type type;
 
@@ -21,6 +21,11 @@ public class Cast extends AbstractASTNode implements Expression{
 
     public Type getType() {
         return type;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
     }
 
     @Override

@@ -1,12 +1,11 @@
 package ast.expressions;
 
-import ast.AbstractASTNode;
-import ast.definitions.Definition;
 import ast.statements.Statement;
+import semantic.Visitor;
 
 import java.util.List;
 
-public class FuncInvocation extends AbstractASTNode implements Expression, Statement {
+public class FuncInvocation extends AbstractExpression implements Expression, Statement {
 
     private Variable variable;
 
@@ -24,6 +23,11 @@ public class FuncInvocation extends AbstractASTNode implements Expression, State
 
     public Variable getVariable() {
         return variable;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
     }
 
     @Override

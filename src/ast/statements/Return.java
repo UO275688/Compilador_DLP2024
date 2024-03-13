@@ -3,6 +3,7 @@ package ast.statements;
 import ast.ASTNode;
 import ast.AbstractASTNode;
 import ast.expressions.Expression;
+import semantic.Visitor;
 
 public class Return extends AbstractASTNode implements Statement, ASTNode {
 
@@ -15,6 +16,11 @@ public class Return extends AbstractASTNode implements Statement, ASTNode {
 
     public Expression getExpression() {
         return expression;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
     }
 
     @Override

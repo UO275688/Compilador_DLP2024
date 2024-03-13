@@ -3,6 +3,7 @@ package ast.definitions;
 import ast.ASTNode;
 import ast.statements.Statement;
 import ast.types.Type;
+import semantic.Visitor;
 
 public class VarDefinition extends AbstractDefinition implements Definition, ASTNode {
 
@@ -19,6 +20,11 @@ public class VarDefinition extends AbstractDefinition implements Definition, AST
 
     public int getOffset() {
         return offset;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
     }
 
     @Override

@@ -3,6 +3,7 @@ package ast.types;
 import ast.ASTNode;
 import ast.AbstractASTNode;
 import ast.definitions.VarDefinition;
+import semantic.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,11 @@ public class FunctionType extends AbstractASTNode implements Type, ASTNode {
 
     public List<VarDefinition> getParams(){
         return this.params;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
     }
 
     @Override

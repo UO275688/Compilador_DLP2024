@@ -547,7 +547,7 @@ public class CmmParser extends Parser {
 				((StatementsContext)_localctx).e2 = expression(0);
 				setState(129);
 				match(T__21);
-				_localctx.ast.add(new Assigment(((StatementsContext)_localctx).e1.ast.getLine(), ((StatementsContext)_localctx).e1.ast.getColumn(), ((StatementsContext)_localctx).e1.ast, ((StatementsContext)_localctx).e2.ast));
+				_localctx.ast.add(new Assignment(((StatementsContext)_localctx).e1.ast.getLine(), ((StatementsContext)_localctx).e1.ast.getColumn(), ((StatementsContext)_localctx).e1.ast, ((StatementsContext)_localctx).e2.ast));
 				}
 				break;
 			case 3:
@@ -1144,11 +1144,9 @@ public class CmmParser extends Parser {
 				setState(252);
 				((StructContext)_localctx).rf = recordFields();
 
-				                //((StructContext)_localctx).rf.ast.forEach(f -> _localctx.fields.add(f));
-
 				                for(RecordField field : ((StructContext)_localctx).rf.ast) {
 				                    if(_localctx.names.contains(field.getName()))
-				                        new ErrorType(field.getLine(), field.getColumn(), String.format("Semantic ERROR: variable %s already defined in the scope.", field.getName()));
+				                        new ErrorType(field.getLine(), field.getColumn(), String.format("Semantic ERROR: variable %s already defined in the scope.", field.getName(), field.getLine(), field.getColumn()));
 				                    else {
 				                        _localctx.names.add(field.getName());
 				                        _localctx.fields.add(field);
@@ -1218,12 +1216,7 @@ public class CmmParser extends Parser {
 				match(T__27);
 				setState(266);
 				((RecordFieldsContext)_localctx).id2 = match(ID);
-
-				                   // if((((RecordFieldsContext)_localctx).id2!=null?((RecordFieldsContext)_localctx).id2.getText():null).equals((((RecordFieldsContext)_localctx).id1!=null?((RecordFieldsContext)_localctx).id1.getText():null)))
-				                     //   new ErrorType(((RecordFieldsContext)_localctx).id2.getLine(), ((RecordFieldsContext)_localctx).id2.getCharPositionInLine()+1, String.format("Semantic ERROR: variable %s already defined in the scope.", (((RecordFieldsContext)_localctx).id2!=null?((RecordFieldsContext)_localctx).id2.getText():null)));
-				                    //else
-				                            _localctx.ast.add( new RecordField(((RecordFieldsContext)_localctx).id2.getLine(), ((RecordFieldsContext)_localctx).id2.getCharPositionInLine()+1, ((RecordFieldsContext)_localctx).t.ast, (((RecordFieldsContext)_localctx).id2!=null?((RecordFieldsContext)_localctx).id2.getText():null)));
-				                
+				 _localctx.ast.add( new RecordField(((RecordFieldsContext)_localctx).id2.getLine(), ((RecordFieldsContext)_localctx).id2.getCharPositionInLine()+1, ((RecordFieldsContext)_localctx).t.ast, (((RecordFieldsContext)_localctx).id2!=null?((RecordFieldsContext)_localctx).id2.getText():null)));
 				}
 				}
 				setState(272);
@@ -1551,6 +1544,8 @@ public class CmmParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class FuncBodyContext extends ParserRuleContext {
 		public FuncBody ast = new FuncBody();
+		public List<VarDefinition> defs = new ArrayList<VarDefinition>();
+		public List<String> names = new ArrayList<String>();
 		public VarDefinitionsContext vd;
 		public StatementsContext s;
 		public List<VarDefinitionsContext> varDefinitions() {
@@ -1586,7 +1581,19 @@ public class CmmParser extends Parser {
 				{
 				setState(330);
 				((FuncBodyContext)_localctx).vd = varDefinitions();
-				_localctx.ast.addVarDefinitions(((FuncBodyContext)_localctx).vd.ast);
+
+				            for(VarDefinition vardef : ((FuncBodyContext)_localctx).vd.ast) {
+				                if(_localctx.names.contains(vardef.getName()))
+				                    new ErrorType(vardef.getLine(), vardef.getColumn(), String.format("Semantic ERROR: variable %s already defined in the scope.", vardef.getName(), vardef.getLine(), vardef.getColumn()));
+				                else {
+				                    _localctx.names.add(vardef.getName());
+				                    _localctx.defs.add(vardef);
+				               }
+				           }
+
+				           _localctx.ast.addVarDefinitions(_localctx.defs);
+
+				        
 				}
 				}
 				setState(337);

@@ -44,7 +44,7 @@ expression returns [Expression ast]:
 
 statements returns [List<Statement> ast = new ArrayList<Statement>()]:
         'while' '(' e=expression ')' b=block {$ast.add(new While($e.ast.getLine(), $e.ast.getColumn(), $e.ast, $b.ast));}
-        | e1=expression '=' e2=expression ';' {$ast.add(new Assigment($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast, $e2.ast));}
+        | e1=expression '=' e2=expression ';' {$ast.add(new Assignment($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast, $e2.ast));}
         | c=consoleInOuts {$c.ast.forEach(s -> $ast.add(s));}
         | fi=functionInvocation ';'     {$ast.add($fi.ast);}
         | 'return' e=expression ';'   {$ast.add(new Return($e.ast.getLine(), $e.ast.getColumn(), $e.ast));}
@@ -100,11 +100,9 @@ void returns [VoidType ast]:
 struct returns [RecordType ast] locals [List<RecordField> fields = new ArrayList<RecordField>(), List<String> names = new ArrayList<String>()]:
          ST='struct' '{' (rf=recordFields
             {
-                //$rf.ast.forEach(f -> $fields.add(f));
-
                 for(RecordField field : $rf.ast) {
                     if($names.contains(field.getName()))
-                        new ErrorType(field.getLine(), field.getColumn(), String.format("Semantic ERROR: variable %s already defined in the scope.", field.getName()));
+                        new ErrorType(field.getLine(), field.getColumn(), String.format("Semantic ERROR: variable %s already defined in the scope.", field.getName(), field.getLine(), field.getColumn()));
                     else {
                         $names.add(field.getName());
                         $fields.add(field);
@@ -116,13 +114,7 @@ struct returns [RecordType ast] locals [List<RecordField> fields = new ArrayList
 
 recordFields returns [List<RecordField> ast = new ArrayList<RecordField>()]:
         t=type id1=ID { $ast.add( new RecordField($id1.getLine(), $id1.getCharPositionInLine()+1, $t.ast, $id1.text)); }
-            (',' id2=ID
-                {
-                   // if($id2.text.equals($id1.text))
-                     //   new ErrorType($id2.getLine(), $id2.getCharPositionInLine()+1, String.format("Semantic ERROR: variable %s already defined in the scope.", $id2.text));
-                    //else
-                            $ast.add( new RecordField($id2.getLine(), $id2.getCharPositionInLine()+1, $t.ast, $id2.text));
-                } )* ';'
+            (',' id2=ID { $ast.add( new RecordField($id2.getLine(), $id2.getCharPositionInLine()+1, $t.ast, $id2.text));} )* ';'
         ;
 
 functionReturnType returns [Type ast]:
@@ -152,8 +144,21 @@ funcDefinition returns [FuncDefinition ast] locals [FunctionType ft]:
                 {$ast = new FuncDefinition($ft.getLine(), $ft.getColumn(), $ft, $ID.text, $fs.ast.getVarDefinitions(), $fs.ast.getStatements());}
         ;
 
-funcBody returns [FuncBody ast = new FuncBody()]:
-    (vd=varDefinitions {$ast.addVarDefinitions($vd.ast);})* (s=statements {$ast.addStatements($s.ast);} )*
+funcBody returns [FuncBody ast = new FuncBody()] locals [List<VarDefinition> defs = new ArrayList<VarDefinition>(), List<String> names = new ArrayList<String>()]:
+    (vd=varDefinitions
+        {
+            for(VarDefinition vardef : $vd.ast) {
+                if($names.contains(vardef.getName()))
+                    new ErrorType(vardef.getLine(), vardef.getColumn(), String.format("Semantic ERROR: variable %s already defined in the scope.", vardef.getName(), vardef.getLine(), vardef.getColumn()));
+                else {
+                    $names.add(vardef.getName());
+                    $defs.add(vardef);
+               }
+           }
+
+           $ast.addVarDefinitions($defs);
+
+        })* (s=statements {$ast.addStatements($s.ast);} )*
     ;
 
 varDefinitions returns [List<VarDefinition> ast = new ArrayList<VarDefinition>()]:

@@ -3,6 +3,7 @@ package ast.types;
 import ast.ASTNode;
 import ast.AbstractASTNode;
 import errorhandler.ErrorHandler;
+import semantic.Visitor;
 
 public class ErrorType extends AbstractASTNode implements Type, ASTNode {
 
@@ -16,6 +17,11 @@ public class ErrorType extends AbstractASTNode implements Type, ASTNode {
 
     public String getMessage() {
         return message;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
     }
 
     @Override

@@ -3,15 +3,26 @@ package ast.statements;
 import ast.ASTNode;
 import ast.AbstractASTNode;
 import ast.expressions.Expression;
+import semantic.Visitor;
 
-public class Assigment extends AbstractASTNode implements Statement, ASTNode {
+public class Assignment extends AbstractASTNode implements Statement, ASTNode {
 
     private Expression leftExpression, rightExpression;
 
-    public Assigment(int line, int column, Expression leftExpression, Expression rightExpression) {
+    private boolean lvalue;
+
+    public Assignment(int line, int column, Expression leftExpression, Expression rightExpression) {
         super(line, column);
         this.leftExpression = leftExpression;
         this.rightExpression = rightExpression;
+    }
+
+    public void setLvalue(boolean lvalue) {
+        this.lvalue = lvalue;
+    }
+
+    public boolean getLvalue() {
+        return this.lvalue;
     }
 
     public Expression getLeftExpression() {
@@ -23,10 +34,16 @@ public class Assigment extends AbstractASTNode implements Statement, ASTNode {
     }
 
     @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
+    }
+
+    @Override
     public String toString() {
         return "Assigment{" +
                 "leftExpression=" + getLeftExpression() +
                 ", rightExpression=" + getRightExpression() +
                 '}';
     }
+
 }

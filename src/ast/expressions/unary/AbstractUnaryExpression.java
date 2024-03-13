@@ -1,17 +1,18 @@
 package ast.expressions.unary;
 
-import ast.AbstractASTNode;
+import ast.expressions.AbstractExpression;
 import ast.expressions.Expression;
 
-public class AbstractUnary extends AbstractASTNode implements Expression {
+public abstract class AbstractUnaryExpression extends AbstractExpression implements Expression {
 
     protected Expression expression;
 
-    public AbstractUnary(int line, int column, Expression expression) {
+    public AbstractUnaryExpression(int line, int column, Expression expression) {
         super(line, column);
         this.expression = expression;
     }
 
     public Expression getExpression() {
         return expression;
-    }}
+    }
+}

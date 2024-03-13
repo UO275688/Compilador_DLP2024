@@ -1,9 +1,10 @@
 package ast.expressions.literals;
 
-import ast.AbstractASTNode;
+import ast.expressions.AbstractExpression;
 import ast.expressions.Expression;
+import semantic.Visitor;
 
-public class IntLiteral extends AbstractASTNode implements Expression {
+public class IntLiteral extends AbstractExpression implements Expression {
 
     private int value;
 
@@ -14,6 +15,11 @@ public class IntLiteral extends AbstractASTNode implements Expression {
 
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
     }
 
     @Override
