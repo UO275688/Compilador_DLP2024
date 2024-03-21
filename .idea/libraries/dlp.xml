@@ -1,11 +1,10 @@
 <component name="libraryTable">
-  <library name="introspector">
+  <library name="dlp">
     <CLASSES>
+      <root url="jar://$PROJECT_DIR$/antlr-4.13.1-complete.jar!/" />
       <root url="jar://$PROJECT_DIR$/introspector.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/introspector.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

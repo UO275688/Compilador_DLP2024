@@ -13,6 +13,10 @@ public class VarDefinition extends AbstractDefinition implements Definition, AST
         super(line, column, type, name);
     }
 
+    public VarDefinition(int line, int column, String name, Type type) {
+        super(line, column, type, name);
+    }
+
     public VarDefinition(int line, int column, Type type, String name, int offset) {
         super(line, column, type, name);
         this.offset = offset;

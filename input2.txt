@@ -1,5 +1,6 @@
 
 double f(int e) {
+    if(e==2)
   return (double)e;
 }
 
@@ -8,7 +9,7 @@ double f(int e) {
 void main() {
   int i,a,j;
   double[10] v;
-  
+
   a = 0;
   i = 0;
   j = -i*a-2;  

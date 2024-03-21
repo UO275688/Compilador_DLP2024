@@ -10,6 +10,8 @@ public abstract class AbstractDefinition extends AbstractASTNode implements ASTN
 
     protected String name;
 
+    protected int scope;
+
     public AbstractDefinition(int line, int column, Type type, String name){
         super(line, column);
         this.type = type;
@@ -24,5 +26,15 @@ public abstract class AbstractDefinition extends AbstractASTNode implements ASTN
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public void setScope(int scope) {
+        this.scope = scope;
+    }
+
+    @Override
+    public int getScope() {
+        return this.scope;
     }
 }

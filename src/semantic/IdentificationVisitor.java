@@ -2,6 +2,7 @@ package semantic;
 
 import ast.Program;
 import ast.RecordField;
+import ast.definitions.Definition;
 import ast.definitions.FuncDefinition;
 import ast.definitions.VarDefinition;
 import ast.expressions.*;
@@ -16,166 +17,58 @@ import ast.expressions.unary.UnaryMinus;
 import ast.expressions.unary.UnaryNot;
 import ast.statements.*;
 import ast.types.*;
+import semantic.symboltable.SymbolTable;
 
-public class IdentificationVisitor implements Visitor<Void, Void> {
+// No longer generic because we instantiate them
+public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
+
+
+    private SymbolTable st = new SymbolTable();
 
     @Override
-    public Void visit(FuncDefinition a, Void param) {
+    public Void visit(FuncDefinition v, Void param) {
+        // FuncDefinition already exists
+        if(!st.insert(v))
+            new ErrorType(v.getLine(), v.getColumn(), String.format("The function definition %s is already defined in the current scope.", v));
+
+        // New scope
+        st.set();
+
+        // Insert the parameters from the function type
+        FunctionType functionType = (FunctionType) v.getType();
+        functionType.getParams().forEach(def -> def.accept(this, param));
+
+        // Insert the variable definitions and statements
+        v.getVarDefinitions().forEach(var -> var.accept(this, param));
+        v.getStatements().forEach(stmt -> stmt.accept(this, param));
+
+        // Scope is deleted and goes back to the parent scope
+        st.reset();
+
         return null;
     }
 
     @Override
-    public Void visit(VarDefinition a, Void param) {
-        return null;
-    }
+    public Void visit(VarDefinition v, Void param) {
+        // Variable already defined
+        if(!st.insert(v))
+            new ErrorType(v.getLine(), v.getColumn(), String.format("The variable definition %s is already defined in the current scope.", v));
 
-    @Override
-    public Void visit(CharLiteral v, Void param) {
-        return null;
-    }
+        v.getType().accept(this, param);
 
-    @Override
-    public Void visit(DoubleLiteral v, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(IntLiteral v, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Arithmetic v, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Comparator v, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Logical v, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Modulus v, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(UnaryMinus v, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(UnaryNot v, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Cast v, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(FieldAccess v, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(FuncInvocation v, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Indexing v, Void param) {
         return null;
     }
 
     @Override
     public Void visit(Variable v, Void param) {
-        return null;
-    }
+        // Variable is NOT defined
+        if(st.find(v.getName()) == null)
+            new ErrorType(v.getLine(), v.getColumn(), String.format("The variable %s is NOT defined in any parent scope.", v));
 
-    @Override
-    public Void visit(Assignment a, Void param) {
-        return null;
-    }
+        Definition definition = st.find(v.getName());
 
-    @Override
-    public Void visit(IfElseStatement a, Void param) {
-        return null;
-    }
+        v.setDefinition(definition);
 
-    @Override
-    public Void visit(Read a, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Return a, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(While a, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Write a, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(ArrayType a, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(CharType a, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(DoubleType a, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(ErrorType a, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(FunctionType a, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(IntType a, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(RecordType a, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(VoidType a, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Program a, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(RecordField a, Void param) {
         return null;
     }
 }

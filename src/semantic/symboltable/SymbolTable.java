@@ -1,4 +1,4 @@
-package symboltable;
+package semantic.symboltable;
 
 import ast.definitions.Definition;
 
@@ -18,26 +18,27 @@ public class SymbolTable {
     // A new Map is created and added when a new scope is opened
     public void set() {
         st.add(new HashMap<String, Definition>());
-        scope++;
+        this.scope++;
     }
 
     // The last Map is deleted when the scope is closed
     public void reset() {
         st.remove(scope);
-        scope--;
+        this.scope--;
     }
 
     // Returns false if the variable was already defined
     public boolean insert(Definition node) {
-        Optional<Definition> definition = findInScope(node.getName());
+        Definition definition = findInCurrentScope(node.getName());
 
         // Variable defined in the current scope
-        if(definition.isPresent())
+        if(definition!= null)
             return false;
 
         // Variable added in the current scope
         st.get(this.scope).put(node.getName(), node);
-        return false;
+        node.setScope(this.scope);
+        return true;
     }
 
     public Definition find(String id) {
@@ -49,10 +50,10 @@ public class SymbolTable {
         return null;
     }
 
-    public Optional<Definition> findInScope(String id) {
+    public Definition findInCurrentScope(String id) {
         if(st.get(this.scope).containsKey(id))
-            return Optional.ofNullable(st.get(this.scope).get(id));
+            return st.get(this.scope).get(id);
 
-        return Optional.empty();
+        return null;
     }
 }

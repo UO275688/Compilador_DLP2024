@@ -155,10 +155,7 @@ funcBody returns [FuncBody ast = new FuncBody()] locals [List<VarDefinition> def
                     $defs.add(vardef);
                }
            }
-
-           $ast.addVarDefinitions($defs);
-
-        })* (s=statements {$ast.addStatements($s.ast);} )*
+        })* {$ast.addVarDefinitions($defs);} (s=statements {$ast.addStatements($s.ast);} )*
     ;
 
 varDefinitions returns [List<VarDefinition> ast = new ArrayList<VarDefinition>()]:
