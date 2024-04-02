@@ -5,22 +5,22 @@ import semantic.Visitor;
 
 public class Cast extends AbstractExpression implements Expression{
 
-    private Type type;
+    private Type castType;
 
     private Expression expression;
 
-    public Cast(int line, int column, Type type, Expression expression) {
+    public Cast(int line, int column, Type castType, Expression expression) {
         super(line, column);
         this.expression = expression;
-        this.type = type;
+        this.castType = castType;
     }
 
     public Expression getExpression() {
         return expression;
     }
 
-    public Type getType() {
-        return type;
+    public Type getCastType() {
+        return castType;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Cast extends AbstractExpression implements Expression{
     @Override
     public String toString() {
         return "Cast{" +
-                "type=" + getType() +
+                "type=" + getCastType() +
                 ", expression=" + getExpression() +
                 '}';
     }

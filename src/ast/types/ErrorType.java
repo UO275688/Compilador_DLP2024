@@ -5,7 +5,9 @@ import ast.AbstractASTNode;
 import errorhandler.ErrorHandler;
 import semantic.Visitor;
 
-public class ErrorType extends AbstractASTNode implements Type, ASTNode {
+import java.util.List;
+
+public class ErrorType extends AbstractType implements Type, ASTNode {
 
     private String message;
 
@@ -17,6 +19,31 @@ public class ErrorType extends AbstractASTNode implements Type, ASTNode {
 
     public String getMessage() {
         return message;
+    }
+
+    @Override
+    public Type arithmetic(Type t) {
+        return this;
+    }
+
+    @Override
+    public Type squareBrackets(Type t) {
+        return this;
+    }
+
+    @Override
+    public Type parenthesis(List<Type> types, ASTNode node) {
+        return this;
+    }
+
+    @Override
+    public Type dot(String s, ASTNode node) {
+        return this;
+    }
+
+    @Override
+    public boolean equivalent(Type t) {
+        return super.equivalent(t);
     }
 
     @Override

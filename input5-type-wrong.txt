@@ -1,0 +1,9 @@
+
+int[10] v;
+
+void main() {
+  int i;
+  i[0]=0;      // * Error 1 not an arraytype
+  v[3]=3.4;    // * Error 2 must be an int in Assigment
+  v[1][2]='a'; // * Error 3  v[1] is integer so it is the same as Error 1
+}

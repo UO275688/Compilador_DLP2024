@@ -8,15 +8,15 @@ import semantic.Visitor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FunctionType extends AbstractASTNode implements Type, ASTNode {
+public class FunctionType extends AbstractType implements Type, ASTNode {
 
     private Type returnType;
 
     private List<VarDefinition> params;
 
-    public FunctionType(int line, int column, Type type, List<VarDefinition> params) {
+    public FunctionType(int line, int column, Type returnType, List<VarDefinition> params) {
         super(line, column);
-        this.returnType = type;
+        this.returnType = returnType;
         this.params = new ArrayList<VarDefinition>(params);
     }
 
@@ -26,6 +26,26 @@ public class FunctionType extends AbstractASTNode implements Type, ASTNode {
 
     public List<VarDefinition> getParams(){
         return this.params;
+    }
+
+    @Override
+    public Type parenthesis(List<Type> types, ASTNode node) {
+        // Check the number of parameters
+        if (types.size() != params.size())
+            return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the Function Type does not have the same number of params, expected %s param/s", params.size()));
+
+        for(int i = 0; i < types.size(); i++)
+            if(!types.get(i).equivalent(params.get(i).getType()))
+                return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the Function Type param %s is not the expected type %s", types.get(i), params.get(i).getType()));
+
+        return returnType;
+    }
+
+    @Override
+    public boolean equivalent(Type t) {
+        if(t instanceof FunctionType)
+            return true;
+        return false;
     }
 
     @Override

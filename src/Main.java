@@ -29,8 +29,9 @@ public class Main {
 
 		Program ast = parser.program().ast;
 
-		ast.accept(new TypeCheckingVisitor(),null);
+		// Identification phase is done prior to type checking
 		ast.accept(new IdentificationVisitor(),null);
+		ast.accept(new TypeCheckingVisitor(),null);
 
 		if (ErrorHandler.getInstance().anyErrors())
 			ErrorHandler.getInstance().showErrors(System.err);

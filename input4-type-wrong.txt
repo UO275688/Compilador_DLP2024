@@ -1,0 +1,21 @@
+
+int i;
+
+int f(int a) {
+  double a;       // * Error 1 already in scope
+  return 34.5;    // * Error 2 must be integer IMPORTANT
+}
+
+void g(int b, double b) { // * Error 3 already defined
+  return 3;   // * Error 4 same as Error 2
+}
+
+void g() {	// * Error 5 already declared
+}
+
+void main() {
+  f();         // * Error 6 in FuncInvocation missing param, num arguments must be the same as parameters
+  f(3.2);      // * Error 7 check ith type argument = ith type param
+  g(3.2, 3);   // * Error 8 type error
+  i=g(1, 2.3); // * Error 9 void cannot assign in Assignment
+}

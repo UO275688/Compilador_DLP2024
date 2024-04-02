@@ -1,0 +1,14 @@
+int integer;
+char character;
+double real;
+struct{
+int a;
+}st;
+void main() {
+  read integer; 
+  character=8.5;    // * Error 1 IMPORTANT
+  3=integer;        // * Error 2 not an lvalue
+  read integer+2;   // * Error 3 not an lvalue
+  integer = character + 'a';
+}
+

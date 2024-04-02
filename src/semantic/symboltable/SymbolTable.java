@@ -12,13 +12,13 @@ public class SymbolTable {
 
     public SymbolTable() {
         st = new ArrayList<Map<String, Definition>>();
-        st.add(new HashMap<String, Definition>());
+        st.add(new HashMap<String, Definition>()); // global scope (0)
     }
 
     // A new Map is created and added when a new scope is opened
     public void set() {
         st.add(new HashMap<String, Definition>());
-        this.scope++;
+        this.scope++; // local scope (1)
     }
 
     // The last Map is deleted when the scope is closed
@@ -32,7 +32,7 @@ public class SymbolTable {
         Definition definition = findInCurrentScope(node.getName());
 
         // Variable defined in the current scope
-        if(definition!= null)
+        if(definition != null)
             return false;
 
         // Variable added in the current scope
@@ -45,15 +45,15 @@ public class SymbolTable {
         // From the current most nested scope to the global
         for(int i = scope; i >= 0; i--)
             if(st.get(i).containsKey(id))
-                return st.get(i).get(id);
+                return st.get(i).get(id);   // defined
 
-        return null;
+        return null;    // NOT defined
     }
 
     public Definition findInCurrentScope(String id) {
         if(st.get(this.scope).containsKey(id))
-            return st.get(this.scope).get(id);
+            return st.get(this.scope).get(id);  // defined
 
-        return null;
+        return null; // NOT defined
     }
 }

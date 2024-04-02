@@ -1,0 +1,10 @@
+struct  { 
+  int day;
+  int month;
+  double day; // * Error 1 duplicated
+} date;
+
+void main() {
+  read date.year; // * Error 2 field access checks that year is created
+}
+

@@ -1,41 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="LAB 8 - completed">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/dlp/ast/expressions/AbstractExpression.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/dlp/ast/expressions/operators/AbstractBinaryExpression.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/dlp/ast/expressions/unary/AbstractUnaryExpression.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/dlp/ast/statements/Assignment.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/dlp/semantic/AbstractVisitor.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/dlp/semantic/IdentificationVisitor.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/dlp/semantic/TypeCheckingVisitor.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/dlp/semantic/Visitor.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/dlp/semantic/symboltable/SymbolTable.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/dlp/test/SymbolTableTest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/parser/CmmParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$BlockContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$BlockContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$BuiltInTypeContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$BuiltInTypeContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$ConsoleInOutsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$ConsoleInOutsContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$DefinitionsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$DefinitionsContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$ExpressionContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$ExpressionContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$FuncBodyContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$FuncBodyContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$FuncDefinitionContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$FuncDefinitionContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$FunctionInvocationContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$FunctionInvocationContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$FunctionReturnTypeContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$FunctionReturnTypeContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$ListExpressionsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$ListExpressionsContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$MainDefinitionContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$MainDefinitionContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$ParamsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$ParamsContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$ProgramContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$ProgramContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$RecordFieldsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$RecordFieldsContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$StatementsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$StatementsContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$StructContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$StructContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$TypeContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$TypeContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$VarDefinitionsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$VarDefinitionsContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$VoidContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser$VoidContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/CmmLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/CmmLexer.java" afterDir="false" />
+    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="LAB 8 - corrected">
+      <change afterPath="$PROJECT_DIR$/input1-type-wrong.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/input2-type-wrong.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/input3-type-wrong.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/input4-type-wrong.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/input4.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/input5-type-wrong.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ast/types/AbstractType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitorAntiguo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input-easy.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/AbstractASTNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/AbstractASTNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/expressions/AbstractExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/expressions/AbstractExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/expressions/Cast.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/expressions/Cast.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/expressions/Expression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/expressions/Expression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/ArrayType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/ArrayType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/CharType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/CharType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/DoubleType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/DoubleType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/ErrorType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/ErrorType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/FunctionType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/FunctionType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/IntType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/IntType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/RecordType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/RecordType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/Type.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/VoidType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/VoidType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/semantic/AbstractVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/semantic/AbstractVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/semantic/IdentificationVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/semantic/IdentificationVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/semantic/TypeCheckingVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/semantic/TypeCheckingVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/AbstractASTNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/AbstractASTNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/expressions/AbstractExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/expressions/AbstractExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/expressions/Cast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/expressions/Cast.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/expressions/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/expressions/Expression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/ArrayType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/ArrayType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/CharType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/CharType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/DoubleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/DoubleType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/ErrorType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/ErrorType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/FunctionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/FunctionType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/IntType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/IntType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/RecordType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/RecordType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/Type.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/VoidType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/VoidType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/AbstractVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/AbstractVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/IdentificationVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/IdentificationVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/symboltable/SymbolTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/symboltable/SymbolTable.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +55,13 @@
   </component>
   <component name="ComposerSettings">
     <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -69,14 +87,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mikel\Documents\UNIOVI\5 QUINTO\DLP\dlp" />
       <recent name="C:\Users\mikel\Documents\UNIOVI\5 QUINTO\DLP\UO275688 LAB 8\dlp" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="semantic" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="dlp" />
-      <option name="PROGRAM_PARAMETERS" value="input3.txt" />
+      <option name="PROGRAM_PARAMETERS" value="input4.txt" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -94,6 +116,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.SymbolTableTest" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.SymbolTableTest" />
@@ -111,7 +137,19 @@
       <workItem from="1711026465527" duration="3870000" />
       <workItem from="1711030995390" duration="336000" />
       <workItem from="1711274819002" duration="789000" />
-      <workItem from="1711292707734" duration="844000" />
+      <workItem from="1711292707734" duration="4104000" />
+      <workItem from="1711297288052" duration="381000" />
+      <workItem from="1711383671961" duration="604000" />
+      <workItem from="1711385407698" duration="1827000" />
+      <workItem from="1711451032516" duration="4444000" />
+      <workItem from="1711469340056" duration="1139000" />
+      <workItem from="1711621075433" duration="6055000" />
+      <workItem from="1711705226307" duration="5955000" />
+      <workItem from="1712048197836" duration="7538000" />
+      <workItem from="1712068004962" duration="1183000" />
+      <workItem from="1712069205627" duration="6712000" />
+      <workItem from="1712077662993" duration="5797000" />
+      <workItem from="1712084904579" duration="5572000" />
     </task>
     <task id="LOCAL-00001" summary="LAB 8">
       <created>1711031244329</created>
@@ -120,7 +158,14 @@
       <option name="project" value="LOCAL" />
       <updated>1711031244329</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="LAB 8 - corrected">
+      <created>1711293595940</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1711293595940</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,6 +185,18 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="LAB 8" />
     <MESSAGE value="LAB 8 - completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="LAB 8 - completed" />
+    <MESSAGE value="LAB 8 - corrected" />
+    <option name="LAST_COMMIT_MESSAGE" value="LAB 8 - corrected" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ast/types/FunctionType.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

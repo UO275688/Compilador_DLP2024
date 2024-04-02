@@ -4,7 +4,7 @@ import ast.ASTNode;
 import ast.AbstractASTNode;
 import semantic.Visitor;
 
-public class ArrayType extends AbstractASTNode implements Type, ASTNode {
+public class ArrayType extends AbstractType implements Type, ASTNode {
 
     private Type type;
 
@@ -35,6 +35,17 @@ public class ArrayType extends AbstractASTNode implements Type, ASTNode {
     public Type getType(){
         return this.type;
     }
+
+    @Override
+    public Type squareBrackets(Type t) {
+        if(t instanceof IntType)
+            return this.type;
+        if(t instanceof ErrorType)
+            return t;
+
+        return new ErrorType(t.getLine(), t.getColumn(), String.format("The type %s CANNOT be an indexing operation (must be int)", t));
+    }
+
 
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
