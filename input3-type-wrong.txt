@@ -6,10 +6,10 @@ struct  {
 } a;
 
 void main() {
-  write i && f; // * Error 1 f must be an integer in Logical
-  write a >= 3; // * Error 2 cannot compare struct to integer in Comparaison
-  while (f)     // * Error 3 check it is an integer
-    if (f)      // * Error 4
-      write !f;   // * Error 5 must be integer in UnaryNot
+  write i && f;     // * Error 1 f must be an integer in Logical
+  write a >= 3;     // * Error 2 cannot compare struct to integer in Comparaison
+  while (f)         // * Error 3 check it is an integer
+    if (f)          // * Error 4 same as Error 3
+      write !f;     // * Error 5 must be integer in UnaryNot
 }
 

@@ -1,7 +1,6 @@
 package ast.types;
 
 import ast.ASTNode;
-import ast.AbstractASTNode;
 import errorhandler.ErrorHandler;
 import semantic.Visitor;
 
@@ -42,8 +41,8 @@ public class ErrorType extends AbstractType implements Type, ASTNode {
     }
 
     @Override
-    public boolean equivalent(Type t) {
-        return super.equivalent(t);
+    public boolean promotableTo(Type t) {
+        return super.promotableTo(t);
     }
 
     @Override

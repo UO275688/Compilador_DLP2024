@@ -1,6 +1,5 @@
 package semantic;
 
-import ast.ASTNode;
 import ast.definitions.FuncDefinition;
 import ast.expressions.*;
 import ast.expressions.literals.CharLiteral;
@@ -19,10 +18,10 @@ import ast.types.*;
 --------------------------- EXPRESSIONS
 
 (P) Cast: expression1 -> type expression2
-(R) expression1.type = expression2.type.promotableTo(type)
+(R) expression1.type = expression2.type.canBeCastTo(type)
 
-(P) FieldAccess: expression1 -> expression2 expression3
-(R) expression1.type = expression2.type.dot(expression3.type)
+(P) FieldAccess: expression1 -> expression2 ID
+(R) expression1.type = expression2.type.dot(ID)
 
 (P) FuncInvocation: expression1 -> expression2 expression3*
 (R) expression1.type = expression2.type.parenthesis(
@@ -68,52 +67,51 @@ Expression2*.stream().map( exp -> exp.type ).toArray()
 --------------------------- UNARY
 
 (P) UnaryMinus: expression1 -> expression2
-(R) expression1.type = expression2.type.mustBeBuiltIn()
+(R) expression1.type = expression2.type.negation()
 
 (P) UnaryNot: expression1 -> expression2
-(R) expression1.type = expression2.type.mustBeBoolean()
+(R) expression1.type = expression2.type.negation()
 
 --------------------------- STATEMENTS
 
 (P) Assignment: statement -> expression1 expression2
-(R) expression1.type.equivalent(expression2.type)
+(R) expression1.type.promotableTo(expression2.type)
 
 (P) IfElseStatement: statement1 -> expression statement2* statement3*
 (R) expression.type.mustBeBoolean()
-    statement2*.forEach( stmt.returnType = type.returnType )
-    statement3*.forEach( stmt.returnType = type.returnType )
+    statement2*.forEach( stmt.returnType = definition.type.returnType )
+    statement3*.forEach( stmt.returnType = definition.type.returnType )
 
-(P) Read: statement -> expression*
-(R) for( Expression exp : expression*) {
-    exp.type.mustBeBuiltIn()
-}
+(P) Read: statement -> expression
+(R) expression.type.readable()
 
 (P) Return: statement -> expression
 (R) expression.type.returnAs(statement.returnType)
 
 (P) WhileStmt: statement1 -> expression statement2*
 (R) expression.type.mustBeBoolean()
-    statement2*.forEach( stmt.returnType = type.returnType )
+    statement2*.forEach( stmt.returnType = definition.type.returnType )
 
-(P) Write: statement -> expression*
-(R) for( Expression exp : expression*) {
-    exp.type.mustBeBuiltIn()
+(P) Write: statement -> expression
+(R) expression.type.writable()
 
 --------------------------- DEFINITIONS
 
-(P) FuncDefinition: definition -> type expression definition* statement*
+(P) FuncDefinition: definition -> type ID definition* statement*
 (R) statement.forEach( stmt.returnType = type.returnType )
 
  */
 // No longer generic because we instantiate them
 public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 
-    /*(P) FuncDefinition: definition -> type expression definition* statement*
+    /*(P) FuncDefinition: definition -> type ID definition* statement*
     (R) statement.forEach( stmt.returnType = type.returnType )*/
     @Override
     public Void visit(FuncDefinition v, Type param) {
         v.getType().accept(this, param);
         v.getVarDefinitions().forEach(var -> var.accept(this, param));
+
+        // Pass the return type as a parameter
         v.getStatements().forEach(stmt -> stmt.accept(this, ((FunctionType) v.getType()).getReturnType()));
 
         return null;
@@ -202,40 +200,40 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     }
 
     /*(P) UnaryMinus: expression1 -> expression2
-    (R) expression1.type = expression2.type.mustBeBuiltIn()*/
+    (R) expression1.type = expression2.type.negation()*/
     @Override
     public Void visit(UnaryMinus v, Type param) {
         v.getExpression().accept(this, param);
         v.setLvalue(false);
-        v.setType(v.getExpression().getType().mustBeBuiltIn(v.getExpression()));
+        v.setType(v.getExpression().getType().negative(v.getExpression()));
 
         return null;
     }
 
     /*(P) UnaryNot: expression1 -> expression2
-    (R) expression1.type = expression2.type.mustBeBoolean()*/
+    (R) expression1.type = expression2.type.negation()*/
     @Override
     public Void visit(UnaryNot v, Type param) {
         v.getExpression().accept(this, param);
         v.setLvalue(false);
-        v.setType(v.getExpression().getType().mustBeBoolean(v.getExpression()));
+        v.setType(v.getExpression().getType().negation(v.getExpression()));
 
         return null;
     }
 
     /*(P) Cast: expression1 -> type expression2
-    (R) expression1.type = expression2.type.promotableTo(type)*/
+    (R) expression1.type = expression2.type.canBeCastTo(type)*/
     @Override
     public Void visit(Cast v, Type param) {
         v.getExpression().accept(this, param);
         v.setLvalue(false);
-        v.setType(v.getExpression().getType().promotableTo(v.getCastType()));
+        v.setType(v.getExpression().getType().canBeCastTo(v.getCastType()));
 
         return null;
     }
 
-    /*(P) FieldAccess: expression1 -> expression2 expression3
-    (R) expression1.type = expression2.type.dot(expression3.type)*/
+    /*(P) FieldAccess: expression1 -> expression2 ID
+    (R) expression1.type = expression2.type.dot(ID)*/
     @Override
     public Void visit(FieldAccess v, Type param) {
         // Post-order, first evaluate the child
@@ -288,18 +286,20 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     }
 
     /*(P) Variable : expression -> ID
-    (R) expression.type = expression.definition.type  Variables are linked with their VarDefinition;*/
+    (R) expression.type = expression.definition.type*/
     @Override
     public Void visit(Variable v, Type param) {
+        //TODO What happens if a variable is not defined?
+
         // Leaf node, no need to traverse
         v.setLvalue(true);
-        v.setType(v.getDefinition().getType());
+        v.setType(v.getDefinition().getType()); // Variables are linked with their VarDefinition
 
         return null;
     }
 
     /*(P) Assignment: statement -> expression1 expression2
-    (R) expression1.type.equivalent(expression2.type)*/
+    (R) expression1.type.promotableTo(expression2.type)*/
     @Override
     public Void visit(Assignment v, Type param) {
         // Post-order traversal
@@ -311,16 +311,14 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         if (!v.getLeftExpression().getLvalue())
             new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: expression %s is NOT be an lvalue.", v.getLeftExpression()));
 
-        if( !v.getLeftExpression().getType().equivalent(v.getRightExpression().getType()))
-            new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: assigning to expression %s the value %s, must have the same built-in type: %s.", v.getLeftExpression(), v.getRightExpression(), v.getLeftExpression().getType()));
+        if( !v.getLeftExpression().getType().promotableTo(v.getRightExpression().getType()))
+            new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: assigning to expression %s the value %s, must be promotable to type %s.", v.getLeftExpression(), v.getRightExpression(), v.getLeftExpression().getType()));
 
         return null;
     }
 
-    /*(P) Read: statement -> expression*
-    (R) for( Expression exp : expression*) {
-        exp.type.mustBeBuiltIn()
-    }*/
+    /*(P) Read: statement -> expression
+    (R) expression.type.readable()*/
     @Override
     public Void visit(Read v, Type param) {
         v.getExpression().accept(this, param);
@@ -328,19 +326,19 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         if (!v.getExpression().getLvalue())
             new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: expression %s MUST be an lvalue.", v.getExpression()));
 
-        v.getExpression().getType().mustBeBuiltIn(v.getExpression());
+        v.getExpression().getType().readable(v.getExpression());
 
         return null;
     }
 
     /*(P) IfElseStatement: statement1 -> expression statement2* statement3*
-    (R) expression.type.mustBeBoolean()
-    statement2*.forEach( stmt.returnType = type.returnType )
-    statement3*.forEach( stmt.returnType = type.returnType )*/
+    (R) expression.type.logical()
+    statement2*.forEach( stmt.returnType = definition.type.returnType )
+    statement3*.forEach( stmt.returnType = definition.type.returnType )*/
     @Override
     public Void visit(IfElseStatement v, Type param) {
         v.getCondition().accept(this, param);
-        v.getCondition().setType(v.getCondition().getType().mustBeBoolean(v.getCondition()));
+        v.getCondition().setType(v.getCondition().getType().logical(v.getCondition()));
         v.getIfStmt().forEach(stmt -> stmt.accept(this, param));
         v.getElseStmt().forEach(stmt -> stmt.accept(this, param));
 
@@ -357,24 +355,23 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     }
 
     /*(P) WhileStmt: statement1 -> expression statement2*
-    (R) expression.type.mustBeBoolean()
-        statement2*.forEach( stmt.returnType = type.returnType )*/
+    (R) expression.type.logical()
+        statement2*.forEach( stmt.returnType = definition.type.returnType )*/
     @Override
     public Void visit(While v, Type param) {
         v.getCondition().accept(this, param);
-        v.getCondition().setType(v.getCondition().getType().mustBeBoolean(v.getCondition()));
+        v.getCondition().setType(v.getCondition().getType().logical(v.getCondition()));
         v.getStatements().forEach(stmt -> stmt.accept(this, param));
 
         return null;
     }
 
-    /*(P) Write: statement -> expression*
-    (R) for( Expression exp : expression*) {
-        exp.type.mustBeBuiltIn()*/
+    /*(P) Write: statement -> expression
+    (R) expression.type.writable()*/
     @Override
     public Void visit(Write v, Type param) {
         v.getExpression().accept(this, param);
-        v.getExpression().getType().mustBeBuiltIn(v.getExpression());
+        v.getExpression().getType().writable(v.getExpression());
 
         return null;
     }

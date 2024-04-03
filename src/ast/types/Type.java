@@ -14,6 +14,8 @@ public interface Type extends ASTNode {
 
     Type logical(Type t, ASTNode node);
 
+    Type logical(ASTNode node);
+
     Type modulus(Type t);
 
     Type squareBrackets(Type t);
@@ -22,13 +24,17 @@ public interface Type extends ASTNode {
 
     Type dot(String s, ASTNode node);
 
-    boolean equivalent(Type t);
+    boolean promotableTo(Type t);
 
-    Type mustBeBuiltIn(ASTNode node);
+    Type readable(ASTNode node);
 
-    Type mustBeBoolean(ASTNode node);
+    Type writable(ASTNode node);
 
-    Type promotableTo(Type type);
+    Type negative(ASTNode node);
+
+    Type negation(ASTNode node);
+
+    Type canBeCastTo(Type type);
 
     Type returnAs(Type param, ASTNode node);
 }

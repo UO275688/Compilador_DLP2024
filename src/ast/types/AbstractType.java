@@ -41,6 +41,11 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
     }
 
     @Override
+    public Type logical(ASTNode node) {
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the type %s MUST be boolean.", node));
+    }
+
+    @Override
     public Type modulus(Type t) {
         if(t instanceof ErrorType)
             return t;
@@ -67,27 +72,37 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
     }
 
     @Override
-    public boolean equivalent(Type t) {
+    public boolean promotableTo(Type t) {
         return false;
     }
 
     @Override
-    public Type mustBeBuiltIn(ASTNode node) {
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: %s MUST be built-in type.", this));
+    public Type readable(ASTNode node) {
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: %s MUST be a built-in type to be read.", this));
     }
 
     @Override
-    public Type mustBeBoolean(ASTNode node) {
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the type %s MUST be boolean.", node));
+    public Type writable(ASTNode node) {
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: %s MUST be a built-in type to be written.", this));
     }
 
     @Override
-    public Type promotableTo(Type type) {
+    public Type negative(ASTNode node) {
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: %s MUST be a built-in type to apply UnaryMinus.", this));
+    }
+
+    @Override
+    public Type negation(ASTNode node) {
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the type %s MUST be boolean to apply UnaryNot.", node));
+    }
+
+    @Override
+    public Type canBeCastTo(Type type) {
         return new ErrorType(type.getLine(), type.getColumn(), String.format("Semantic ERROR: the type %s CANNOT be promoted.", type));
     }
 
     @Override
     public Type returnAs(Type t, ASTNode node) {
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the return type of the function %s CANNOT be returned as the expression type.", t));
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the return type of the function %s CANNOT be returned as the expression type %s.", t, this));
     }
 }

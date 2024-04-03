@@ -31,7 +31,7 @@ public class RecordType extends AbstractType implements Type, ASTNode {
     }
 
     @Override
-    public boolean equivalent(Type t) {
+    public boolean promotableTo(Type t) {
         if(t instanceof RecordType)
             return true;
         return false;

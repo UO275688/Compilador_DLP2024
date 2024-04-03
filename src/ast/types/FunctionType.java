@@ -1,7 +1,6 @@
 package ast.types;
 
 import ast.ASTNode;
-import ast.AbstractASTNode;
 import ast.definitions.VarDefinition;
 import semantic.Visitor;
 
@@ -35,14 +34,14 @@ public class FunctionType extends AbstractType implements Type, ASTNode {
             return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the Function Type does not have the same number of params, expected %s param/s", params.size()));
 
         for(int i = 0; i < types.size(); i++)
-            if(!types.get(i).equivalent(params.get(i).getType()))
+            if(!types.get(i).promotableTo(params.get(i).getType()))
                 return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the Function Type param %s is not the expected type %s", types.get(i), params.get(i).getType()));
 
         return returnType;
     }
 
     @Override
-    public boolean equivalent(Type t) {
+    public boolean promotableTo(Type t) {
         if(t instanceof FunctionType)
             return true;
         return false;

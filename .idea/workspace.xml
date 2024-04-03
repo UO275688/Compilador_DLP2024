@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="LAB 8 - corrected">
-      <change afterPath="$PROJECT_DIR$/input1-type-wrong.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/input2-type-wrong.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/input3-type-wrong.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/input4-type-wrong.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/input4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/input5-type-wrong.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ast/types/AbstractType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitorAntiguo.java" afterDir="false" />
+    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="LAB 9 - Type Checking">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input-easy.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/AbstractASTNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/AbstractASTNode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/expressions/AbstractExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/expressions/AbstractExpression.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/expressions/Cast.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/expressions/Cast.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/expressions/Expression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/expressions/Expression.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/ArrayType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/ArrayType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input3-type-wrong.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input3-type-wrong.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/CharType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/CharType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/DoubleType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/DoubleType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/ErrorType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/ErrorType.class" afterDir="false" />
@@ -25,16 +11,8 @@
       <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/IntType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/IntType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/RecordType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/RecordType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/Type.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/VoidType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/VoidType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/semantic/AbstractVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/semantic/AbstractVisitor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/semantic/IdentificationVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/semantic/IdentificationVisitor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/dlp/semantic/TypeCheckingVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/semantic/TypeCheckingVisitor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/AbstractASTNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/AbstractASTNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/expressions/AbstractExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/expressions/AbstractExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/expressions/Cast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/expressions/Cast.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/expressions/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/expressions/Expression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/types/ArrayType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/ArrayType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/AbstractType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/AbstractType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast/types/CharType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/CharType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast/types/DoubleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/DoubleType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast/types/ErrorType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/ErrorType.java" afterDir="false" />
@@ -42,11 +20,8 @@
       <change beforePath="$PROJECT_DIR$/src/ast/types/IntType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/IntType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast/types/RecordType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/RecordType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast/types/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/Type.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/types/VoidType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/VoidType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/semantic/AbstractVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/AbstractVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/semantic/IdentificationVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/IdentificationVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/semantic/symboltable/SymbolTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/symboltable/SymbolTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitorAntiguo.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +53,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="TODO_SCOPE" value="All Places" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Facets" />
@@ -149,7 +125,9 @@
       <workItem from="1712068004962" duration="1183000" />
       <workItem from="1712069205627" duration="6712000" />
       <workItem from="1712077662993" duration="5797000" />
-      <workItem from="1712084904579" duration="5572000" />
+      <workItem from="1712084904579" duration="5875000" />
+      <workItem from="1712137712875" duration="5974000" />
+      <workItem from="1712143803223" duration="24000" />
     </task>
     <task id="LOCAL-00001" summary="LAB 8">
       <created>1711031244329</created>
@@ -165,7 +143,14 @@
       <option name="project" value="LOCAL" />
       <updated>1711293595940</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="LAB 9 - Type Checking">
+      <created>1712093046616</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1712093046616</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -186,14 +171,15 @@
     <MESSAGE value="LAB 8" />
     <MESSAGE value="LAB 8 - completed" />
     <MESSAGE value="LAB 8 - corrected" />
-    <option name="LAST_COMMIT_MESSAGE" value="LAB 8 - corrected" />
+    <MESSAGE value="LAB 9 - Type Checking" />
+    <option name="LAST_COMMIT_MESSAGE" value="LAB 9 - Type Checking" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/ast/types/FunctionType.java</url>
-          <line>33</line>
+          <line>32</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

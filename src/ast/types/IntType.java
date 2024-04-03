@@ -41,14 +41,34 @@ public class IntType extends AbstractType implements Type, ASTNode {
     }
 
     @Override
-    public boolean equivalent(Type t) {
+    public Type logical(ASTNode node) {
+        return this;
+    }
+
+    @Override
+    public boolean promotableTo(Type t) {
         if(t instanceof IntType)
             return true;
         return false;
     }
 
     @Override
-    public Type mustBeBuiltIn(ASTNode node) {
+    public Type readable(ASTNode node) {
+        return this;
+    }
+
+    @Override
+    public Type writable(ASTNode node) {
+        return this;
+    }
+
+    @Override
+    public Type negative(ASTNode node) {
+        return this;
+    }
+
+    @Override
+    public Type negation(ASTNode node) {
         return this;
     }
 
@@ -65,12 +85,7 @@ public class IntType extends AbstractType implements Type, ASTNode {
     }
 
     @Override
-    public Type mustBeBoolean(ASTNode node) {
-        return this;
-    }
-
-    @Override
-    public Type promotableTo(Type t) {
+    public Type canBeCastTo(Type t) {
         if(t instanceof IntType)
             return this;
         if(t instanceof DoubleType)
@@ -90,7 +105,7 @@ public class IntType extends AbstractType implements Type, ASTNode {
         if(t instanceof ErrorType)
             return t;
 
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the return type of the function %s CANNOT be returned as the expression type.", t));
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the return type of the function %s CANNOT be returned as the expression type %s.", t, this));
     }
 
     @Override
