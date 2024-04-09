@@ -11,6 +11,11 @@ public class IntType extends AbstractType implements Type, ASTNode {
     }
 
     @Override
+    public int numberOfBytes() {
+        return 2;
+    }
+
+    @Override
     public Type arithmetic(Type t) {
         if(t instanceof IntType)
             return this; //return t; works as well, as both are IntType

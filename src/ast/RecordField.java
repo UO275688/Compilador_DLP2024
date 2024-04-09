@@ -1,9 +1,10 @@
 package ast;
 
+import ast.types.AbstractType;
 import ast.types.Type;
 import semantic.Visitor;
 
-public class RecordField extends AbstractASTNode implements ASTNode {
+public class RecordField extends AbstractType implements ASTNode {
 
     private Type type;
 
@@ -33,6 +34,7 @@ public class RecordField extends AbstractASTNode implements ASTNode {
         return "RecordField{" +
                 "type=" + getType() +
                 ", name='" + getName() + '\'' +
+                ", offset='" + getOffset() + '\'' +
                 '}';
     }
 }

@@ -16,6 +16,12 @@ public class ArrayType extends AbstractType implements Type, ASTNode {
         this.size = size;
     }
 
+    @Override
+    // Recursive, works with multidimensional arrays
+    public int numberOfBytes(){
+        return this.type.numberOfBytes() * this.size;
+    }
+
     public void setNewDimensionType(Type newType) {
         try {
             ((ArrayType) this.type).setNewDimensionType(newType);

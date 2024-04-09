@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="LAB 9 - Type Checking">
+    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="Type Checking fixed">
+      <change afterPath="$PROJECT_DIR$/input5.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codegeneration/OffsetVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input3-type-wrong.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input3-type-wrong.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input2-type-wrong.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input2-type-wrong.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/RecordField.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/RecordField.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/definitions/VarDefinition.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/definitions/VarDefinition.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/ArrayType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/ArrayType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/CharType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/CharType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/DoubleType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/DoubleType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/ErrorType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/ErrorType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/FunctionType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/FunctionType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/IntType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/IntType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/RecordType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/RecordType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/Type.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/semantic/TypeCheckingVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/semantic/TypeCheckingVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/RecordField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/RecordField.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/definitions/VarDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/definitions/VarDefinition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast/types/AbstractType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/AbstractType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/ArrayType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/ArrayType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast/types/CharType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/CharType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast/types/DoubleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/DoubleType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/types/ErrorType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/ErrorType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/types/FunctionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/FunctionType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast/types/IntType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/IntType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast/types/RecordType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/RecordType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast/types/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/Type.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitorAntiguo.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +77,7 @@
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="dlp" />
-      <option name="PROGRAM_PARAMETERS" value="input4.txt" />
+      <option name="PROGRAM_PARAMETERS" value="input5.txt" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -128,6 +131,12 @@
       <workItem from="1712084904579" duration="5875000" />
       <workItem from="1712137712875" duration="5974000" />
       <workItem from="1712143803223" duration="24000" />
+      <workItem from="1712156396071" duration="69000" />
+      <workItem from="1712157386690" duration="2761000" />
+      <workItem from="1712584461602" duration="388000" />
+      <workItem from="1712650360735" duration="17000" />
+      <workItem from="1712652984100" duration="6362000" />
+      <workItem from="1712675754997" duration="1928000" />
     </task>
     <task id="LOCAL-00001" summary="LAB 8">
       <created>1711031244329</created>
@@ -150,7 +159,14 @@
       <option name="project" value="LOCAL" />
       <updated>1712093046616</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Type Checking fixed">
+      <created>1712156448111</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1712156448111</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -172,15 +188,16 @@
     <MESSAGE value="LAB 8 - completed" />
     <MESSAGE value="LAB 8 - corrected" />
     <MESSAGE value="LAB 9 - Type Checking" />
-    <option name="LAST_COMMIT_MESSAGE" value="LAB 9 - Type Checking" />
+    <MESSAGE value="Type Checking fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Type Checking fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ast/types/FunctionType.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="2" />
+          <url>file://$PROJECT_DIR$/src/Main.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

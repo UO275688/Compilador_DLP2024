@@ -22,6 +22,10 @@ public class VarDefinition extends AbstractDefinition implements Definition, AST
         this.offset = offset;
     }
 
+    public void setOffset(int offset){
+        this.offset = offset;
+    }
+
     public int getOffset() {
         return offset;
     }

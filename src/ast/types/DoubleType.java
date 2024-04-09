@@ -10,6 +10,11 @@ public class DoubleType extends AbstractType implements Type, ASTNode {
     }
 
     @Override
+    public int numberOfBytes() {
+        return 4;
+    }
+
+    @Override
     public Type arithmetic(Type t) {
         if(t instanceof DoubleType)
             return this;

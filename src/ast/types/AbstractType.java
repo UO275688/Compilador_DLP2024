@@ -7,6 +7,8 @@ import java.util.List;
 
 public abstract class AbstractType extends AbstractASTNode implements Type{
 
+    private int offset;
+
     public AbstractType(int line, int column) {
         super(line, column);
     }
@@ -104,5 +106,18 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
     @Override
     public Type returnAs(Type t, ASTNode node) {
         return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the return type of the function %s CANNOT be returned as the expression type %s.", t, this));
+    }
+
+    @Override
+    public int numberOfBytes() {
+        return 0;
+    }
+
+    public void setOffset(int offset){
+        this.offset = offset;
+    }
+
+    public int getOffset(){
+        return offset;
     }
 }

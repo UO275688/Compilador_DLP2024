@@ -13,6 +13,11 @@ public class CharType extends AbstractType implements Type, ASTNode {
     }
 
     @Override
+    public int numberOfBytes() {
+        return 1;
+    }
+
+    @Override
     public Type arithmetic(Type t) {
         if(t instanceof CharType)
             return new IntType(t.getLine(), t.getColumn());

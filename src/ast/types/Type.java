@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface Type extends ASTNode {
 
+    int numberOfBytes();
+
     String typeExpression();
 
     Type arithmetic(Type t);

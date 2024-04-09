@@ -22,6 +22,19 @@ public class RecordType extends AbstractType implements Type, ASTNode {
     }
 
     @Override
+    public int numberOfBytes() {
+        int fieldsBytesSum = 0;
+
+        for (RecordField rf : this.fields)
+            fieldsBytesSum += rf.getType().numberOfBytes();
+
+        return fieldsBytesSum;
+
+        // Aggregation / reduction
+        // return this.fields.stream().mapToInt(rf -> rf.type.numberOfBytes()).sum();
+    }
+
+    @Override
     public Type dot(String recordField, ASTNode node) {
         for(RecordField field : fields)
             if(field.getName().equals(recordField))
