@@ -21,31 +21,6 @@ public class ErrorType extends AbstractType implements Type, ASTNode {
     }
 
     @Override
-    public Type arithmetic(Type t) {
-        return this;
-    }
-
-    @Override
-    public Type squareBrackets(Type t) {
-        return this;
-    }
-
-    @Override
-    public Type parenthesis(List<Type> types, ASTNode node) {
-        return this;
-    }
-
-    @Override
-    public Type dot(String s, ASTNode node) {
-        return this;
-    }
-
-    @Override
-    public boolean promotableTo(Type t) {
-        return super.promotableTo(t);
-    }
-
-    @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
         return v.visit(this, param);
     }

@@ -32,9 +32,9 @@ public class Main {
 
 		// Identification phase is done prior to type checking
 		ast.accept(new IdentificationVisitor(),null);
-		if (ErrorHandler.getInstance().anyErrors())
-			ErrorHandler.getInstance().showErrors(System.err);
-		else
+		//if (ErrorHandler.getInstance().anyErrors())
+		//	ErrorHandler.getInstance().showErrors(System.err);
+		//else
 		ast.accept(new TypeCheckingVisitor(),null);
 
 		ast.accept(new OffsetVisitor(),null);

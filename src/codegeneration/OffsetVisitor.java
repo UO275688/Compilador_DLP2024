@@ -63,6 +63,18 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 
     private int globalsBytesSum = 0;
 
+    /*
+    GLOBAL VARIABLES
+
+    &global = Σ numberOfBytes( types( previous global, itself excluded ) )
+
+    P: VarDefinition: definition -> type ID
+    R:
+    if (definition.scope == 0) {
+        definition.offset = globalsBytesSum;        // global field initialized to 0
+        globalsBytesSum += type.numberOfBytes();
+    }
+     */
     @Override
     public Void visit(VarDefinition v, Void param) {
         v.getType().accept(this, param);
@@ -76,6 +88,19 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
         return null;
     }
 
+    /*
+    LOCAL VARIABLES
+
+    &localVariable = BP – Σ numberOfBytes( types( previous local variables, itself included ) )
+
+    (P) FuncDefinition: definition -> type definition* statements*
+    (R)
+    int localBytesSum = 0;
+    for (VarDefinition v : varDefinitions*) {
+        localBytesSum += v.type.numberOfBytes();
+        v.offset = - localBytesSum;
+    }
+     */
     @Override
     public Void visit(FuncDefinition f, Void param) {
         int localBytesSum = 0;
@@ -93,6 +118,19 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
         return null;
     }
 
+    /*
+    PARAMETERS
+
+    &parameter = BP + 4 + Σ numberOfBytes( types( right-most parameters, itself excluded ) )
+
+    (P) FunctionType: type1 -> type2 definition*
+    (R)
+    int paramBytesSum = 0;
+    for (int i = definition*.size(); i >= 0; i--) {
+        definition*.get(i).offset = paramBytesSum + 4;
+        paramBytesSum += v.type.numberOfBytes();
+    }
+     */
     @Override
     public Void visit(FunctionType v, Void param) {
         v.getReturnType().accept(this, param);
@@ -108,6 +146,19 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
         return null;
     }
 
+    /*
+    RECORD FIELDS
+
+    &recordField = Σ numberOfBytes( types( previous fields, itself excluded ) )
+
+    (P) RecordType: type -> fields
+    (R)
+    int fieldsBytesSum = 0;
+    for (RecordField rf : fields*) {
+        rf.offset = fieldsBytesSum;
+        fieldsBytesSum += rf.type.numberOfBytes();
+    }
+     */
     @Override
     public Void visit(RecordType v, Void param) {
         v.getFields().forEach(f -> f.accept(this, param));
@@ -116,7 +167,6 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 
         for (RecordField rf : v.getFields()) {
             rf.setOffset(fieldsBytesSum);
-            System.out.println(fieldsBytesSum);
             fieldsBytesSum += rf.getType().numberOfBytes();
         }
 

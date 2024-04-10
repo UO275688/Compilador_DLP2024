@@ -172,13 +172,17 @@ public abstract class AbstractVisitor<TP, TR> implements Visitor<TP, TR>{
     }
 
     @Override
-    public TR visit(ArrayType a, TP param) {
-        a.getType().accept(this, param);
+    public TR visit(VoidType a, TP param) {
         return null;
     }
 
     @Override
     public TR visit(CharType a, TP param) {
+        return null; // leaf node
+    }
+
+    @Override
+    public TR visit(IntType a, TP param) {
         return null; // leaf node
     }
 
@@ -200,7 +204,8 @@ public abstract class AbstractVisitor<TP, TR> implements Visitor<TP, TR>{
     }
 
     @Override
-    public TR visit(IntType a, TP param) {
+    public TR visit(ArrayType a, TP param) {
+        a.getType().accept(this, param);
         return null;
     }
 
@@ -211,19 +216,14 @@ public abstract class AbstractVisitor<TP, TR> implements Visitor<TP, TR>{
     }
 
     @Override
-    public TR visit(VoidType a, TP param) {
+    public TR visit(RecordField a, TP param) {
+        a.getType().accept(this, param);
         return null;
     }
 
     @Override
     public TR visit(Program a, TP param) {
         a.getDefinitions().forEach(def -> def.accept(this, param));
-        return null;
-    }
-
-    @Override
-    public TR visit(RecordField a, TP param) {
-        a.getType().accept(this, param);
         return null;
     }
 }

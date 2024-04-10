@@ -266,9 +266,6 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         // Expression
         v.setType(v.getVariable().getType().parenthesis(v.getParams().stream().map(exp -> exp.getType()).toList(), v));
 
-        // Statement
-        //v.getVariable().getType().parenthesis(v.getParams().stream().map(exp -> exp.getType()).toList());
-
         return null;
     }
 
@@ -289,8 +286,6 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     (R) expression.type = expression.definition.type*/
     @Override
     public Void visit(Variable v, Type param) {
-        //TODO What happens if a variable is not defined?
-
         // Leaf node, no need to traverse
         v.setLvalue(true);
         v.setType(v.getDefinition().getType()); // Variables are linked with their VarDefinition
