@@ -26,7 +26,7 @@ if (definition.scope == 0) {
 
 &localVariable = BP – Σ numberOfBytes( types( previous local variables, itself included ) )
 
-(P) FuncDefinition: definition -> type definition* statements*
+(P) FuncDefinition: definition -> type varDefinitions* statements*
 (R)
 int localBytesSum = 0;
 for (VarDefinition v : varDefinitions*) {
@@ -161,11 +161,11 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
      */
     @Override
     public Void visit(RecordType v, Void param) {
-        v.getFields().forEach(f -> f.accept(this, param));
-
         int fieldsBytesSum = 0;
 
+        // Post-order traversal for the children, in case we have another struct inside
         for (RecordField rf : v.getFields()) {
+            rf.accept(this, param);
             rf.setOffset(fieldsBytesSum);
             fieldsBytesSum += rf.getType().numberOfBytes();
         }

@@ -352,7 +352,7 @@ public class CmmParser extends Parser {
 						}
 						setState(86);
 						((ExpressionContext)_localctx).e2 = ((ExpressionContext)_localctx).expression = expression(5);
-						 if((((ExpressionContext)_localctx).OP!=null?((ExpressionContext)_localctx).OP.getText():null).equals('%'))
+						 if((((ExpressionContext)_localctx).OP!=null?((ExpressionContext)_localctx).OP.getText():null).equals("%"))
 						                          ((ExpressionContext)_localctx).ast =  new Modulus(((ExpressionContext)_localctx).e1.ast.getLine(), ((ExpressionContext)_localctx).e1.ast.getColumn(), ((ExpressionContext)_localctx).e1.ast, ((ExpressionContext)_localctx).e2.ast);
 						                      else
 						                          ((ExpressionContext)_localctx).ast =  new Arithmetic(((ExpressionContext)_localctx).e1.ast.getLine(), ((ExpressionContext)_localctx).e1.ast.getColumn(), ((ExpressionContext)_localctx).e1.ast, ((ExpressionContext)_localctx).e2.ast, (((ExpressionContext)_localctx).OP!=null?((ExpressionContext)_localctx).OP.getText():null));

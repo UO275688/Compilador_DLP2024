@@ -29,7 +29,7 @@ expression returns [Expression ast]:
         | '-' e=expression     {$ast = new UnaryMinus($e.ast.getLine(), $e.ast.getColumn(), $e.ast);}
         | '!' e=expression    {$ast = new UnaryNot($e.ast.getLine(), $e.ast.getColumn(), $e.ast);}
         | e1=expression OP=('*'| '/' | '%') e2=expression
-            { if($OP.text.equals('%'))
+            { if($OP.text.equals("%"))
                 $ast = new Modulus($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast, $e2.ast);
             else
                 $ast = new Arithmetic($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast, $e2.ast, $OP.text);

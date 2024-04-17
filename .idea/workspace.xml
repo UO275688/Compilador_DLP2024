@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="Offset Visitor implemented for Code Generation">
+    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="Small changes">
+      <change afterPath="$PROJECT_DIR$/codegenerated.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/input6.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codegeneration/AbstractCGVisitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codegeneration/AddressCGVisitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codegeneration/CodeGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codegeneration/ExecuteCGVisitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codegeneration/ValueCGVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input2-type-wrong.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input2-type-wrong.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/expressions/operators/Arithmetic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/expressions/operators/Arithmetic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/CharType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/CharType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/DoubleType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/DoubleType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/ErrorType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/ErrorType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/IntType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/IntType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/Type.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/VoidType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/VoidType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/Cmm.g4" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/Cmm.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/CmmParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/semantic/AbstractVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/semantic/AbstractVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/semantic/TypeCheckingVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/semantic/TypeCheckingVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/semantic/Visitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/semantic/Visitor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/types/ErrorType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/ErrorType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/types/VoidType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/VoidType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/expressions/operators/Arithmetic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/expressions/operators/Arithmetic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/AbstractType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/AbstractType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/CharType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/CharType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/DoubleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/DoubleType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/IntType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/IntType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/Type.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codegeneration/OffsetVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/OffsetVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/semantic/AbstractVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/AbstractVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/Cmm.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/Cmm.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/CmmParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/CmmParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Visitor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +52,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -62,7 +94,7 @@
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="dlp" />
-      <option name="PROGRAM_PARAMETERS" value="input5.txt" />
+      <option name="PROGRAM_PARAMETERS" value="input6.txt codegenerated.txt" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -122,7 +154,14 @@
       <workItem from="1712650360735" duration="17000" />
       <workItem from="1712652984100" duration="6362000" />
       <workItem from="1712675754997" duration="2872000" />
-      <workItem from="1712747145440" duration="5934000" />
+      <workItem from="1712747145440" duration="5976000" />
+      <workItem from="1713024446867" duration="10000" />
+      <workItem from="1713196390451" duration="4121000" />
+      <workItem from="1713258553618" duration="750000" />
+      <workItem from="1713262852156" duration="2047000" />
+      <workItem from="1713277104077" duration="6960000" />
+      <workItem from="1713285458310" duration="6491000" />
+      <workItem from="1713352256370" duration="2972000" />
     </task>
     <task id="LOCAL-00001" summary="LAB 8">
       <created>1711031244329</created>
@@ -159,7 +198,14 @@
       <option name="project" value="LOCAL" />
       <updated>1712678199549</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Small changes">
+      <created>1712763811990</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1712763811990</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,6 +229,7 @@
     <MESSAGE value="LAB 9 - Type Checking" />
     <MESSAGE value="Type Checking fixed" />
     <MESSAGE value="Offset Visitor implemented for Code Generation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Offset Visitor implemented for Code Generation" />
+    <MESSAGE value="Small changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Small changes" />
   </component>
 </project>

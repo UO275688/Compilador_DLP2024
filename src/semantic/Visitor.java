@@ -17,6 +17,8 @@ import ast.expressions.unary.UnaryNot;
 import ast.statements.*;
 import ast.types.*;
 
+import java.io.IOException;
+
 // Generic
 public interface Visitor<TP, TR> {
 
@@ -65,7 +67,7 @@ public interface Visitor<TP, TR> {
     public TR visit(RecordType a, TP param);
     public TR visit(VoidType a, TP param);
 
+    public TR visit(RecordField a, TP param);
 
     public TR visit(Program a, TP param);
-    public TR visit(RecordField a, TP param);
 }

@@ -18,7 +18,7 @@ public class Arithmetic extends AbstractBinaryExpression implements Expression {
         return "Arithmetic{" +
                 "leftExpression=" + getLeft() +
                 ", rightExpression=" + getRight() +
-                ", operator='" + getOperator() +
+                ", operator=" + getOperator() +
                 '}';
     }
 }

@@ -39,4 +39,6 @@ public interface Type extends ASTNode {
     Type canBeCastTo(Type type);
 
     Type returnAs(Type param, ASTNode node);
+
+    char getSuffix();
 }
