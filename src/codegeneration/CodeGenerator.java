@@ -257,15 +257,22 @@ public class CodeGenerator {
         }
     }
 
-    public void callMain(int line) {
+    public void callMain() {
         try {
             addComment("\n#source\t\"" + inputFile + "\"");
             addComment("\n\n\n' Invocation to the main function");
             out.write("\ncall main");
             out.write("\nhalt\n");
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void invokeMain(int line) {
+        try {
             addLine(line);
             out.write("\n\n main:");
-
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -299,6 +306,15 @@ public class CodeGenerator {
     public void unaryNot() {
         try {
             out.write("\n\tnot");
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void enter(int offset) {
+        try {
+            out.write("\n\tenter\t" + offset);
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();

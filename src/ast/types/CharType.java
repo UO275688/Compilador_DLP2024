@@ -102,6 +102,11 @@ public class CharType extends AbstractType implements Type, ASTNode {
     }
 
     @Override
+    public String getNameType() {
+        return "char";
+    }
+
+    @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
         return v.visit(this, param);
     }

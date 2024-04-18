@@ -52,6 +52,10 @@ public class ArrayType extends AbstractType implements Type, ASTNode {
         return new ErrorType(t.getLine(), t.getColumn(), String.format("The type %s CANNOT be an indexing operation (must be int)", t));
     }
 
+    @Override
+    public String getNameType() {
+        return "array";
+    }
 
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {

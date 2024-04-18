@@ -41,4 +41,6 @@ public interface Type extends ASTNode {
     Type returnAs(Type param, ASTNode node);
 
     char getSuffix();
+
+    String getNameType();
 }

@@ -125,4 +125,9 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
     public int getOffset(){
         return offset;
     }
+
+    @Override
+    public String getNameType() {
+        return "";
+    }
 }

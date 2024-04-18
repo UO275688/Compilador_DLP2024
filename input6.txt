@@ -3,7 +3,7 @@ int a;
 double r;
 int i;
 
-void main() {	
+void main() {
 	c = 'a';
 	write c, '\n';
 

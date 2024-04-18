@@ -51,6 +51,11 @@ public class RecordType extends AbstractType implements Type, ASTNode {
     }
 
     @Override
+    public String getNameType() {
+        return "struct";
+    }
+
+    @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
         return v.visit(this, param);
     }

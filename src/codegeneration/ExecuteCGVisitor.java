@@ -1,6 +1,7 @@
 package codegeneration;
 
 import ast.Program;
+import ast.RecordField;
 import ast.definitions.Definition;
 import ast.definitions.FuncDefinition;
 import ast.definitions.VarDefinition;
@@ -9,6 +10,7 @@ import ast.statements.Read;
 import ast.statements.Statement;
 import ast.statements.Write;
 import ast.types.FunctionType;
+import ast.types.RecordType;
 
 /*
 execute[[Read: statement -> expression]] =
@@ -119,30 +121,53 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
 
     /*
     execute[[VarDefinition: definition -> type ID]] =
-
+        ´ * type.toString() ID ( offset vardefinition.offset )
+        }
     */
     @Override
     public Void visit(VarDefinition v, Void param) {
+        // Global scope
+        if(v.getScope() == 0)
+            cg.addComment("\n' * " + v.getType().getNameType() + " " + v.getName() + " (offset " + v.getOffset() + ")");
 
+        // Local scope
+        else if (v.getScope() > 0)
+            cg.addComment("\n\t' * " + v.getType().getNameType() + " " + v.getName() + " (offset " + v.getOffset() + ")");
 
         return null;
     }
 
     /*
     execute[[FuncDefinition: definition -> type ID vardefinitions* statements* ]] =
+        ID :
+        ' * Parameters:
         execute[[type]]
+
+        ' * Local variables:
         for(Definition var : vardefinitions*)
             execute[[var]]
+
+        if (vardefinition*.size() > 0)
+            enter -vardefinition*.get(vardefinition*.size()-1).offset
+
         for(Statement stmt : statements*)
             execute[[stmt]]
         <ret> type.returnFunctionBytes
     */
     @Override
     public Void visit(FuncDefinition v, Void param) {
+        cg.addLine(v.getLine());
+        cg.addComment("\n\n " + v.getName() + ":");
+
+        cg.addComment("\n\t' * Parameters:");
         v.getType().accept(this, param);
 
+        cg.addComment("\n\t' * Local variables:");
         for(VarDefinition vardef : v.getVarDefinitions())
             vardef.accept(this, param);
+
+        //if (v.getVarDefinitions().size() > 0)
+          //  cg.enter(-v.getVarDefinitions().get(v.getVarDefinitions().size()-1).getOffset());
 
         for(Statement stmt : v.getStatements())
             stmt.accept(this, param);
@@ -152,10 +177,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
         return null;
     }
 
-
-
     /*
     execute[[Program: program -> definition*]] =
+    ´ * Global variables:
     for(Definition vardef : definition*)
         if(vardef instanceof VarDefinition)
             execute[[vardef]]
@@ -170,11 +194,15 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
      */
     @Override
     public Void visit(Program v, Void param) {
-        for(Definition vardef : v.getDefinitions())
-            if(vardef instanceof VarDefinition)
-                vardef.accept(this, param);
+        cg.callMain();
+        cg.addComment("\n' * Global variables:");
 
-        cg.callMain(v.getLine());
+        for(Definition vardef : v.getDefinitions()) {
+            if (vardef instanceof VarDefinition)
+                vardef.accept(this, param);
+        }
+
+        //cg.invokeMain(v.getLine());
 
         for(Definition fundef : v.getDefinitions())
             if(fundef instanceof FuncDefinition)
@@ -182,4 +210,29 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
 
         return null;
     }
+
+    @Override
+    public Void visit(FunctionType v, Void param) {
+        for(VarDefinition var : v.getParams())
+            var.accept(this, param);
+
+        return null;
+    }
+
+    /*
+    @Override
+    public Void visit(RecordType v, Void param) {
+        for(RecordField f : v.getFields())
+            f.accept(this, param);
+
+        return null;
+    }
+
+    @Override
+    public Void visit(RecordField v, Void param) {
+        cg.addComment("\n\t' * " + v.getType().getNameType() + " " + v.getName() + " (offset " + v.getOffset() + ")");
+
+        return null;
+    }
+    */
 }

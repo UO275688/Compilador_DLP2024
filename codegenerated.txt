@@ -6,10 +6,17 @@
 call main
 halt
 
+' * Global variables:
+' * char c (offset 0)
+' * int a (offset 1)
+' * double r (offset 3)
+' * int i (offset 7)
 
 #line	6
 
  main:
+	' * Parameters:
+	' * Local variables:
 
 #line	7
 	pusha	0
