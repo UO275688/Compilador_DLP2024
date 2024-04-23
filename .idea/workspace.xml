@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="Minor changes code generation">
-      <change afterPath="$PROJECT_DIR$/input7.txt" afterDir="false" />
+    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="LAB 12 Code Generation II Completed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/ArrayType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/ArrayType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/DoubleType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/DoubleType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/types/RecordType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/types/RecordType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/RecordField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/RecordField.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast/types/AbstractType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/AbstractType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/types/ArrayType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/ArrayType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/types/DoubleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/DoubleType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/types/RecordType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/RecordType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codegeneration/AddressCGVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/AddressCGVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codegeneration/AbstractCGVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/AbstractCGVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codegeneration/CodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/CodeGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codegeneration/ExecuteCGVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/ExecuteCGVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codegeneration/ValueCGVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/ValueCGVisitor.java" afterDir="false" />
@@ -77,7 +69,7 @@
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="dlp" />
-      <option name="PROGRAM_PARAMETERS" value="input7.txt codegenerated2.txt" />
+      <option name="PROGRAM_PARAMETERS" value="big-input.txt codegenerated4.txt" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -150,7 +142,7 @@
       <workItem from="1713450760705" duration="689000" />
       <workItem from="1713826456543" duration="86000" />
       <workItem from="1713862698084" duration="6156000" />
-      <workItem from="1713878018954" duration="1868000" />
+      <workItem from="1713878018954" duration="5582000" />
     </task>
     <task id="LOCAL-00001" summary="LAB 8">
       <created>1711031244329</created>
@@ -208,7 +200,14 @@
       <option name="project" value="LOCAL" />
       <updated>1713451401152</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="LAB 12 Code Generation II Completed">
+      <created>1713880055124</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1713880055124</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,7 +234,8 @@
     <MESSAGE value="Small changes" />
     <MESSAGE value="LAB 11 Code Generation" />
     <MESSAGE value="Minor changes code generation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor changes code generation" />
+    <MESSAGE value="LAB 12 Code Generation II Completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="LAB 12 Code Generation II Completed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

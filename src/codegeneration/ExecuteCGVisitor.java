@@ -5,9 +5,11 @@ import ast.RecordField;
 import ast.definitions.Definition;
 import ast.definitions.FuncDefinition;
 import ast.definitions.VarDefinition;
+import ast.expressions.FuncInvocation;
 import ast.statements.*;
 import ast.types.FunctionType;
 import ast.types.RecordType;
+import ast.types.VoidType;
 
 /*
 execute[[Read: statement -> expression]] =
@@ -27,7 +29,7 @@ execute[[Assignment: statement -> expression1 expression2]] =
 
 
 execute[[VarDefinition: definition -> type ID]] =
-
+        ´ * type.toString() ID ( offset vardefinition.offset )
 
 
 execute[[FuncDefinition: definition -> type ID vardefinitions* statements* ]] =
@@ -37,7 +39,6 @@ execute[[FuncDefinition: definition -> type ID vardefinitions* statements* ]] =
     for(Statement stmt : statements*)
         execute[[stmt]]
     <ret> type.returnFunctionBytes
-
 
 
 execute[[Program: program -> definition*]] =
@@ -72,6 +73,18 @@ execute[[IfElseStmt: statement1 -> expression statement2* statement3*]] =
 	elseLabel<:>
 		statement3*.forEach(s -> execute[[s]])
 	exitLabel<:>
+
+
+execute[[FuncInvocation: statement → expression1 expression2*]] =
+	expression2*.forEach(exp -> value[[exp]])
+	<call > expression1.name
+	if(!(expression1.type.returnType instanceof VoidType))
+		<pop > expression1.type.returnType.suffix()
+
+
+execute[[Return: statement -> expression]] =
+	value[[expression]]
+	<ret > ?, ?, ?
  */
 public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
 
@@ -140,7 +153,6 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
     /*
     execute[[VarDefinition: definition -> type ID]] =
         ´ * type.toString() ID ( offset vardefinition.offset )
-        }
     */
     @Override
     public Void visit(VarDefinition v, Void param) {
@@ -186,6 +198,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
 
         if (v.getVarDefinitions().size() > 0)
             cg.enter(-v.getVarDefinitions().get(v.getVarDefinitions().size()-1).getOffset());
+        else
+            cg.enter(0);
 
         for(Statement stmt : v.getStatements())
             stmt.accept(this, param);
@@ -295,19 +309,36 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
     }
 
     /*
+    execute[[FuncInvocation: statement → expression1 expression2*]] =
+        expression2*.forEach(exp -> value[[exp]])
+        <call > expression1.name
+        if(!(expression1.type.returnType instanceof VoidType))
+            <pop > expression1.type.returnType.suffix()
+     */
     @Override
-    public Void visit(RecordType v, Void param) {
-        for(RecordField f : v.getFields())
-            f.accept(this, param);
+    public Void visit(FuncInvocation v, Void param) {
+        cg.addLine(v.getLine());
+        v.getParams().forEach(exp -> exp.accept(valueVisitor, param));
+        cg.callFunction(v.getVariable().getName());
+
+        if(! (v.getType() instanceof VoidType) )
+            cg.popi();
 
         return null;
     }
 
+    /*
+    execute[[Return: statement -> expression]] =
+        value[[expression]]
+        <ret > ?, ?, ?
+     */
     @Override
-    public Void visit(RecordField v, Void param) {
-        cg.addComment("\n\t' * " + v.getType().getNameType() + " " + v.getName() + " (offset " + v.getOffset() + ")");
+    public Void visit(Return v, Void param) {
+        cg.addLine(v.getLine());
+        cg.addComment("\n\t' * Return");
+        v.getExpression().accept(valueVisitor, param);
+        //cg.returnFunctionBytes((FunctionType) v.getType(), v);
 
         return null;
     }
-    */
 }

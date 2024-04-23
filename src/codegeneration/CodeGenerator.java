@@ -345,7 +345,7 @@ public class CodeGenerator {
             for(VarDefinition param : functionType.getParams())
                 parametersBytes += param.getType().numberOfBytes();
 
-            out.write("\n\tret\t" + bytesToReturn+", "+ localVarsBytes+", "+parametersBytes + "\n");
+            out.write("\n\tret\t" + bytesToReturn+", "+ localVarsBytes+", "+parametersBytes + "");
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -364,6 +364,33 @@ public class CodeGenerator {
     public void enter(int offset) {
         try {
             out.write("\n\tenter\t" + offset);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void callFunction(String functionName) {
+        try {
+            out.write("\n\tcall\t" + functionName);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void popi() {
+        try {
+            out.write("\n\tpopi");
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void pop(Type type) {
+        try {
+            out.write("\n\tpop" + type.getSuffix());
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();

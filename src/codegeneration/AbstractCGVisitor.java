@@ -217,6 +217,6 @@ public class AbstractCGVisitor<TP, TR> implements Visitor<TP, TR> {
     private void throwAssertion() {
         String msg = "Undefined template visitX for the code function " + this.getClass().getName();
         assert false: msg;
-        //throw new UnsupportedOperationException(msg);
+        throw new UnsupportedOperationException(msg);
     }
 }

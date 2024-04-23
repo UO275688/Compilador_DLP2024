@@ -1,9 +1,6 @@
 package codegeneration;
 
-import ast.expressions.Cast;
-import ast.expressions.FieldAccess;
-import ast.expressions.Indexing;
-import ast.expressions.Variable;
+import ast.expressions.*;
 import ast.expressions.literals.CharLiteral;
 import ast.expressions.literals.DoubleLiteral;
 import ast.expressions.literals.IntLiteral;
@@ -102,6 +99,10 @@ value[[Indexing: expression1 -> expression2 expression3]] =
 value[[FieldAccess: expression1 -> expression2 ID]] =
 	address[[expression1]]
 	<load > expression1.type.suffix()
+
+value[[FuncInvocation: expression1 → expression2 expression3*]] =
+	expression3*.forEach(exp -> value[[exp]])
+	<call > expression2.name
  */
 public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
@@ -116,7 +117,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /*
     value[[IntLiteral: expression -> INT_CONSTANT]] =
-	<pushi> expression.value
+	<pushi > expression.value
      */
     @Override
     public Void visit(IntLiteral v, Void param) {
@@ -126,7 +127,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /*
     value[[CharLiteral: expression -> CHAR_CONSTANT]] =
-	<pushb> (int) expression.value
+	<pushb > (int) expression.value
      */
     @Override
     public Void visit(CharLiteral v, Void param) {
@@ -136,7 +137,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /*
     value[[RealLiteral: expression -> DOUBLE_CONSTANT]] =
-	<pushf> expression.value
+	<pushf > expression.value
      */
     @Override
     public Void visit(DoubleLiteral v, Void param) {
@@ -147,7 +148,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
     /*
     value[[Variable: expression -> ID]] =
 	address[[expression]]
-	<load> expression.type.suffix()
+	<load > expression.type.suffix()
     */
     @Override
     public Void visit(Variable v, Void param) {
@@ -163,10 +164,10 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	value[[expression3]]
 	expression3.type.arithmeticConvertTo(expression1.type)
 	switch (expression1.operator) {
-		case "+" : <add> expression1.type.suffix() break;
-		case "-" : <sub> expression1.type.suffix() break;
-		case "*" : <mul> expression1.type.suffix() break;
-		case "/" : <div> expression1.type.suffix() break;
+		case "+" : <add > expression1.type.suffix() break;
+		case "-" : <sub > expression1.type.suffix() break;
+		case "*" : <mul > expression1.type.suffix() break;
+		case "/" : <div > expression1.type.suffix() break;
 		default: assert false;
 	}
 	*/
@@ -211,12 +212,12 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	value[[expression3]]
 	expression3.type.superType(expression1.type)
 	switch (expression1.operator) {
-		case ">" : <gt> expression1.type.suffix()  break;
-		case "<" : <lt> expression1.type.suffix() break;
-		case ">=" : <ge> expression1.type.suffix() break;
-		case "<=" : <le> expression1.type.suffix() break;
-		case "==" : <eq> expression1.type.suffix() break;
-		case "!=" : <ne> expression1.type.suffix() break;
+		case ">" : <gt > expression1.type.suffix()  break;
+		case "<" : <lt > expression1.type.suffix() break;
+		case ">=" : <ge > expression1.type.suffix() break;
+		case "<=" : <le > expression1.type.suffix() break;
+		case "==" : <eq > expression1.type.suffix() break;
+		case "!=" : <ne > expression1.type.suffix() break;
 		default: assert false;
 	}
 
@@ -305,6 +306,18 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
     public Void visit(FieldAccess v, Void param) {
         v.accept(addressVisitor, param);
         cg.load(v.getType());
+        return null;
+    }
+
+    /*
+    value[[FuncInvocation: expression1 → expression2 expression3*]] =
+        expression3*.forEach(exp -> value[[exp]])
+        <call > expression2.name
+     */
+    @Override
+    public Void visit(FuncInvocation v, Void param) {
+        v.getParams().forEach(exp -> exp.accept(this, param));
+        cg.callFunction(v.getVariable().getName());
         return null;
     }
 }

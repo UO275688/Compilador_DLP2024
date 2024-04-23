@@ -110,7 +110,9 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
 
     @Override
     public char getSuffix() {
-        throw new IllegalStateException( "Line: " + getLine() + " column: " + getColumn() + " Code generation ERROR: CANNOT get the suffix of the type %s " + this);
+        ErrorType errorType = new ErrorType(getLine(), getColumn(), String.format("Code generation ERROR: CANNOT get the suffix of the type " + this));
+        throw new IllegalStateException(errorType.toString());
+        // throw new IllegalStateException( "Line: " + getLine() + " column: " + getColumn() + " Code generation ERROR: CANNOT get the suffix of the type %s " + this);
     }
 
     @Override
