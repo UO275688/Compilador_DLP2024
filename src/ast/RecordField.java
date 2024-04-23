@@ -25,6 +25,11 @@ public class RecordField extends AbstractType implements ASTNode {
     }
 
     @Override
+    public String getNameType() {
+        return "(" + name + " x " + type.getNameType() + ")";
+    }
+
+    @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
         return v.visit(this, param);
     }

@@ -13,9 +13,42 @@ public class CodeGenerator {
 
     private String inputFile;
 
+    private int labels = 0;
+
     public CodeGenerator(String inputFile, String outputFile) throws IOException {
         this.inputFile = inputFile;
         this.out = new FileWriter(outputFile);
+    }
+
+    public String nextLabel() {
+        return "label" + this.labels++;
+    }
+
+    public void addLabel(String label) {
+        try{
+            out.write("\n " + label + ":");
+            out.flush();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void jmp(String label) {
+        try{
+            out.write("\n\tjmp\t" + label);
+            out.flush();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void jz(String label) {
+        try{
+            out.write("\n\tjz\t" + label);
+            out.flush();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void pusha(int offet) {
@@ -29,7 +62,7 @@ public class CodeGenerator {
 
     public void pushBP(){
         try{
-            out.write("\n\tpusha\tbp");
+            out.write("\n\tpush\tbp");
             out.flush();
         } catch (IOException e){
             e.printStackTrace();
@@ -65,7 +98,25 @@ public class CodeGenerator {
 
     public void add(Type type){
         try{
-            out.write("\n\tadd\t" + type.getSuffix());
+            out.write("\n\tadd" + type.getSuffix());
+            out.flush();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void addi(){
+        try{
+            out.write("\n\taddi");
+            out.flush();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void muli(){
+        try{
+            out.write("\n\tmuli");
             out.flush();
         } catch (IOException e){
             e.printStackTrace();
@@ -257,22 +308,20 @@ public class CodeGenerator {
         }
     }
 
-    public void callMain() {
+    public void addSource() {
         try {
             addComment("\n#source\t\"" + inputFile + "\"");
-            addComment("\n\n\n' Invocation to the main function");
-            out.write("\ncall main");
-            out.write("\nhalt\n");
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void invokeMain(int line) {
+    public void callMain() {
         try {
-            addLine(line);
-            out.write("\n\n main:");
+            addComment("\n\n' Invocation to the main function");
+            out.write("\ncall main");
+            out.write("\nhalt\n");
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -296,7 +345,7 @@ public class CodeGenerator {
             for(VarDefinition param : functionType.getParams())
                 parametersBytes += param.getType().numberOfBytes();
 
-            out.write("\n\tret\t" + bytesToReturn+", "+ localVarsBytes+", "+parametersBytes);
+            out.write("\n\tret\t" + bytesToReturn+", "+ localVarsBytes+", "+parametersBytes + "\n");
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();

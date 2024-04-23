@@ -1,7 +1,6 @@
 package ast.types;
 
 import ast.ASTNode;
-import ast.AbstractASTNode;
 import ast.RecordField;
 import semantic.Visitor;
 
@@ -19,6 +18,14 @@ public class RecordType extends AbstractType implements Type, ASTNode {
 
     public List<RecordField> getFields() {
         return fields;
+    }
+
+    public RecordField getField(String fieldName) {
+        for(RecordField f : fields)
+            if(f.getName().equals(fieldName))
+                return f;
+
+        return null;
     }
 
     @Override
@@ -52,7 +59,20 @@ public class RecordType extends AbstractType implements Type, ASTNode {
 
     @Override
     public String getNameType() {
-        return "struct";
+        String fieldString = "";
+        for(int i = 0; i < fields.size(); i++){
+            if(i == fields.size() - 1)
+                fieldString += fields.get(i).getNameType();
+            else
+                fieldString += fields.get(i).getNameType() + "x";
+
+        }
+        return "record(" + fieldString + ")";
+    }
+
+    @Override
+    public char getSuffix() {
+        return 'i';
     }
 
     @Override

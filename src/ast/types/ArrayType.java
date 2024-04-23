@@ -54,7 +54,12 @@ public class ArrayType extends AbstractType implements Type, ASTNode {
 
     @Override
     public String getNameType() {
-        return "array";
+        return "[" + getSize() + "," + getType().getNameType() + "]";
+    }
+
+    @Override
+    public char getSuffix() {
+        return 'i';
     }
 
     @Override

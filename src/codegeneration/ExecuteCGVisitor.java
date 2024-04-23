@@ -5,10 +5,7 @@ import ast.RecordField;
 import ast.definitions.Definition;
 import ast.definitions.FuncDefinition;
 import ast.definitions.VarDefinition;
-import ast.statements.Assignment;
-import ast.statements.Read;
-import ast.statements.Statement;
-import ast.statements.Write;
+import ast.statements.*;
 import ast.types.FunctionType;
 import ast.types.RecordType;
 
@@ -55,6 +52,26 @@ execute[[Program: program -> definition*]] =
 	for(Definition fundef : definition*)
         if(fundef instanceof FuncDefinition)
             execute[[fundef]]
+
+execute[[WhileStatement: statement -> exp statement*]] =
+	String conditionLabel = cg.nextLabel(), exitLabel = cg.nextLabel();
+	conditionLabel<:>
+		value[[exp]]
+		<jz> exitLabel
+		statement*.forEach(stmt -> execute[[stmt]])
+		<jmp> conditionLabel
+	exitLabel<:>
+
+
+execute[[IfElseStmt: statement1 -> expression statement2* statement3*]] =
+	String elseLabel = cg.nextLabel(), exitLabel = cg.nextLabel();
+		value[[expression]]
+		<jz> elseLabel
+		statement2*.forEach(s -> execute[[s]])
+		<jmp> exitLabel
+	elseLabel<:>
+		statement3*.forEach(s -> execute[[s]])
+	exitLabel<:>
  */
 public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
 
@@ -67,6 +84,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
         this.cg = cg;
         this.addressVisitor = new AddressCGVisitor(cg);
         this.valueVisitor = new ValueCGVisitor(cg, addressVisitor);
+        this.addressVisitor.setValueCGVisitor(valueVisitor);
     }
 
     /*
@@ -128,7 +146,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
     public Void visit(VarDefinition v, Void param) {
         // Global scope
         if(v.getScope() == 0)
-            cg.addComment("\n' * " + v.getType().getNameType() + " " + v.getName() + " (offset " + v.getOffset() + ")");
+            cg.addComment("\n\t' * " + v.getType().getNameType() + " " + v.getName() + " (offset " + v.getOffset() + ")");
 
         // Local scope
         else if (v.getScope() > 0)
@@ -159,15 +177,15 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
         cg.addLine(v.getLine());
         cg.addComment("\n\n " + v.getName() + ":");
 
-        cg.addComment("\n\t' * Parameters:");
+        cg.addComment("\n\t' * Parameters");
         v.getType().accept(this, param);
 
-        cg.addComment("\n\t' * Local variables:");
+        cg.addComment("\n\t' * Local variables");
         for(VarDefinition vardef : v.getVarDefinitions())
             vardef.accept(this, param);
 
-        //if (v.getVarDefinitions().size() > 0)
-          //  cg.enter(-v.getVarDefinitions().get(v.getVarDefinitions().size()-1).getOffset());
+        if (v.getVarDefinitions().size() > 0)
+            cg.enter(-v.getVarDefinitions().get(v.getVarDefinitions().size()-1).getOffset());
 
         for(Statement stmt : v.getStatements())
             stmt.accept(this, param);
@@ -187,26 +205,24 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
     <call main>
 	<halt>
 
-    <main:>
 	for(Definition fundef : definition*)
         if(fundef instanceof FuncDefinition)
             execute[[fundef]]
      */
     @Override
     public Void visit(Program v, Void param) {
-        cg.callMain();
-        cg.addComment("\n' * Global variables:");
+        cg.addSource();
+        cg.addComment("\n\n\t' * Global variables:");
 
         for(Definition vardef : v.getDefinitions()) {
-            if (vardef instanceof VarDefinition)
-                vardef.accept(this, param);
+            if (vardef instanceof VarDefinition varDefinition)
+                varDefinition.accept(this, param);
         }
-
-        //cg.invokeMain(v.getLine());
+        cg.callMain();
 
         for(Definition fundef : v.getDefinitions())
-            if(fundef instanceof FuncDefinition)
-                fundef.accept(this, param);
+            if(fundef instanceof FuncDefinition funcDefinition)
+                funcDefinition.accept(this, param);
 
         return null;
     }
@@ -215,6 +231,65 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
     public Void visit(FunctionType v, Void param) {
         for(VarDefinition var : v.getParams())
             var.accept(this, param);
+
+        return null;
+    }
+
+    /*
+    execute[[WhileStatement: statement -> exp statement*]] =
+        String conditionLabel = cg.nextLabel(), exitLabel = cg.nextLabel();
+        conditionLabel<:>
+            value[[exp]]
+            <jz> exitLabel
+            statement*.forEach(stmt -> execute[[stmt]])
+            <jmp> conditionLabel
+        exitLabel<:>
+     */
+    @Override
+    public Void visit(While v, Void param) {
+        cg.addComment("\n\t' * While");
+        cg.addLine(v.getLine());
+
+        String conditionLabel = cg.nextLabel(), exitLabel = cg.nextLabel();
+        cg.addLabel(conditionLabel);
+        v.getCondition().accept(valueVisitor, param);
+        cg.jz(exitLabel);
+        cg.addComment("\n\t' * Body of the while statement");
+        v.getStatements().forEach(stmt -> stmt.accept(this, param));
+        cg.jmp(conditionLabel);
+        cg.addLabel(exitLabel);
+
+        return null;
+    }
+
+    /*
+    execute[[IfElseStmt: statement1 -> expression statement2* statement3*]] =
+        String elseLabel = cg.nextLabel(), exitLabel = cg.nextLabel();
+            value[[expression]]
+            <jz> elseLabel
+            statement2*.forEach(s -> execute[[s]])
+            <jmp> exitLabel
+        elseLabel<:>
+            statement3*.forEach(s -> execute[[s]])
+        exitLabel<:>
+     */
+    @Override
+    public Void visit(IfElseStatement v, Void param) {
+        cg.addComment("\n\t' * If statement");
+        cg.addLine(v.getLine());
+
+        String elseLabel = cg.nextLabel(), exitLabel = cg.nextLabel();
+        v.getCondition().accept(valueVisitor, param);
+        cg.jz(elseLabel);
+        cg.addComment("\n\t' * Body of the if branch");
+
+        v.getIfStmt().forEach(stmt -> stmt.accept(this, param));
+        cg.jmp(exitLabel);
+        cg.addLabel(elseLabel);
+
+        cg.addComment("\n\t' * Body of the else branch");
+        v.getElseStmt().forEach(stmt -> stmt.accept(this, param));
+        cg.addLabel(exitLabel);
 
         return null;
     }

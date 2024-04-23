@@ -1,6 +1,8 @@
 package codegeneration;
 
 import ast.expressions.Cast;
+import ast.expressions.FieldAccess;
+import ast.expressions.Indexing;
 import ast.expressions.Variable;
 import ast.expressions.literals.CharLiteral;
 import ast.expressions.literals.DoubleLiteral;
@@ -91,6 +93,15 @@ value[[Cast: expression1 -> type expression2]] =
 value[[UnaryNot: expression1 -> expression2]] =
     value[[expression2]]
     <not>
+
+value[[Indexing: expression1 -> expression2 expression3]] =
+	address[[expression1]]
+	<load > expression1.type.suffix()
+
+
+value[[FieldAccess: expression1 -> expression2 ID]] =
+	address[[expression1]]
+	<load > expression1.type.suffix()
  */
 public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
@@ -270,6 +281,30 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
         v.getExpression().accept(this, param);
         cg.unaryNot();
 
+        return null;
+    }
+
+    /*
+    value[[Indexing: expression1 -> expression2 expression3]] =
+        address[[expression1]]
+        <load > expression1.type.suffix()
+     */
+    @Override
+    public Void visit(Indexing v, Void param) {
+        v.accept(addressVisitor, param);
+        cg.load(v.getType());
+        return null;
+    }
+
+    /*
+    value[[FieldAccess: expression1 -> expression2 ID]] =
+        address[[expression1]]
+        <load > expression1.type.suffix()
+     */
+    @Override
+    public Void visit(FieldAccess v, Void param) {
+        v.accept(addressVisitor, param);
+        cg.load(v.getType());
         return null;
     }
 }

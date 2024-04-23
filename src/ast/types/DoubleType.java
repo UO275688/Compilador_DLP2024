@@ -87,7 +87,7 @@ public class DoubleType extends AbstractType implements Type, ASTNode {
 
     @Override
     public String getNameType() {
-        return "double";
+        return "real";
     }
 
     @Override
