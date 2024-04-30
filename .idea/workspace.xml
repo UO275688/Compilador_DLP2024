@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="LAB 12 Code Generation II Completed">
+    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="LAB 13 Code Generation III Completed">
+      <change afterPath="$PROJECT_DIR$/src/ast/ReturnBytes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/types/AbstractType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/AbstractType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codegeneration/AbstractCGVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/AbstractCGVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegenerated4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/codegenerated4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/semantic/TypeCheckingVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/semantic/TypeCheckingVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codegeneration/AddressCGVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/AddressCGVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codegeneration/CodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/CodeGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codegeneration/ExecuteCGVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/ExecuteCGVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codegeneration/ValueCGVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/ValueCGVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +145,9 @@
       <workItem from="1713450760705" duration="689000" />
       <workItem from="1713826456543" duration="86000" />
       <workItem from="1713862698084" duration="6156000" />
-      <workItem from="1713878018954" duration="5582000" />
+      <workItem from="1713878018954" duration="6068000" />
+      <workItem from="1714411590339" duration="1279000" />
+      <workItem from="1714467581837" duration="5473000" />
     </task>
     <task id="LOCAL-00001" summary="LAB 8">
       <created>1711031244329</created>
@@ -207,7 +212,14 @@
       <option name="project" value="LOCAL" />
       <updated>1713880055124</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="LAB 13 Code Generation III Completed">
+      <created>1713883896214</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1713883896214</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,7 +247,8 @@
     <MESSAGE value="LAB 11 Code Generation" />
     <MESSAGE value="Minor changes code generation" />
     <MESSAGE value="LAB 12 Code Generation II Completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="LAB 12 Code Generation II Completed" />
+    <MESSAGE value="LAB 13 Code Generation III Completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="LAB 13 Code Generation III Completed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

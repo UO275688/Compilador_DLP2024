@@ -250,13 +250,12 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     /*
     (P) FuncInvocation: expression1 -> expression2 expression3*
     (R) expression1.type = expression2.type.parenthesis(
-            expression3*.stream().map( exp -> exp.type ).toArray()
-        )
+            expression3*.stream().map( exp -> exp.type ).toArray())
 
     (P) FuncInvocation: statement -> expression1 expression2*
     (R) expression1.type.parenthesis(
-            expression2*.stream().map( exp -> exp.type ).toArray()
-        )*/
+            expression2*.stream().map( exp -> exp.type ).toArray())
+    */
     @Override
     public Void visit(FuncInvocation v, Type param) {
         v.getVariable().accept(this, param);

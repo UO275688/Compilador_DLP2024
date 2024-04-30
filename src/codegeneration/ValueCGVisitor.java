@@ -117,7 +117,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /*
     value[[IntLiteral: expression -> INT_CONSTANT]] =
-	<pushi > expression.value
+	    <pushi > expression.value
      */
     @Override
     public Void visit(IntLiteral v, Void param) {
@@ -127,7 +127,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /*
     value[[CharLiteral: expression -> CHAR_CONSTANT]] =
-	<pushb > (int) expression.value
+	    <pushb > (int) expression.value
      */
     @Override
     public Void visit(CharLiteral v, Void param) {
@@ -137,7 +137,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /*
     value[[RealLiteral: expression -> DOUBLE_CONSTANT]] =
-	<pushf > expression.value
+	    <pushf > expression.value
      */
     @Override
     public Void visit(DoubleLiteral v, Void param) {
@@ -147,8 +147,8 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /*
     value[[Variable: expression -> ID]] =
-	address[[expression]]
-	<load > expression.type.suffix()
+	    address[[expression]]
+	    <load > expression.type.suffix()
     */
     @Override
     public Void visit(Variable v, Void param) {
@@ -159,17 +159,17 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /*
     value[[Arithmetic: expression1 -> expression2 (+ | - | *) expression3]] =
-	value[[expression2]]
-	expression2.type.arithmeticConvertTo(expression1.type)
-	value[[expression3]]
-	expression3.type.arithmeticConvertTo(expression1.type)
-	switch (expression1.operator) {
-		case "+" : <add > expression1.type.suffix() break;
-		case "-" : <sub > expression1.type.suffix() break;
-		case "*" : <mul > expression1.type.suffix() break;
-		case "/" : <div > expression1.type.suffix() break;
-		default: assert false;
-	}
+        value[[expression2]]
+        expression2.type.arithmeticConvertTo(expression1.type)
+        value[[expression3]]
+        expression3.type.arithmeticConvertTo(expression1.type)
+        switch (expression1.operator) {
+            case "+" : <add > expression1.type.suffix() break;
+            case "-" : <sub > expression1.type.suffix() break;
+            case "*" : <mul > expression1.type.suffix() break;
+            case "/" : <div > expression1.type.suffix() break;
+            default: assert false;
+	    }
 	*/
     @Override
     public Void visit(Arithmetic v, Void param) {

@@ -1,5 +1,6 @@
 package codegeneration;
 
+import ast.ReturnBytes;
 import ast.definitions.FuncDefinition;
 import ast.definitions.VarDefinition;
 import ast.types.*;
@@ -328,6 +329,15 @@ public class CodeGenerator {
         }
     }
 
+    public void returnBytes(ReturnBytes rt){
+        try {
+            out.write("\n\tret\t" + rt.getBytesReturn() +", " + rt.getBytesLocals()+", "+ rt.getBytesArgs() + "");
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /*
     1.	Bytes to return (2)
     2.	Bytes of all the local variables (5)
@@ -396,4 +406,6 @@ public class CodeGenerator {
             e.printStackTrace();
         }
     }
+
+
 }

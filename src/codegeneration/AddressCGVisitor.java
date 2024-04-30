@@ -48,7 +48,7 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void>{
     }
 
     /*
-        address[[Variable: expression -> ID]] =
+    address[[Variable: expression -> ID]] =
         if (expression.definition.scope==0)
             <pusha > expression.definition.offset
         else {
@@ -56,7 +56,7 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void>{
             <pushi > expression.definition.offset
             <addi >
         }
-         */
+    */
     @Override
     public Void visit(Variable v, Void param) {
         if (v.getDefinition().getScope() == 0)
