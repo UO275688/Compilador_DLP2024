@@ -1,8 +1,6 @@
 package codegeneration;
 
 import ast.ReturnBytes;
-import ast.definitions.FuncDefinition;
-import ast.definitions.VarDefinition;
 import ast.types.*;
 
 import java.io.FileWriter;
@@ -232,7 +230,6 @@ public class CodeGenerator {
         }
     }
 
-
     public void modulusConvertTo(Type type, Type intType) {
         if(type instanceof CharType)
             castTo(type, intType);
@@ -338,30 +335,6 @@ public class CodeGenerator {
         }
     }
 
-    /*
-    1.	Bytes to return (2)
-    2.	Bytes of all the local variables (5)
-    3.	Bytes of all the arguments (5)
-     */
-    public void returnFunctionBytes(FunctionType functionType, FuncDefinition funcDefinition) {
-        try {
-            int localVarsBytes = 0;
-            int parametersBytes = 0;
-            int bytesToReturn = functionType.getReturnType().numberOfBytes();
-
-            for(VarDefinition vardef : funcDefinition.getVarDefinitions())
-                localVarsBytes += vardef.getType().numberOfBytes();
-
-            for(VarDefinition param : functionType.getParams())
-                parametersBytes += param.getType().numberOfBytes();
-
-            out.write("\n\tret\t" + bytesToReturn+", "+ localVarsBytes+", "+parametersBytes + "");
-            out.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void unaryNot() {
         try {
             out.write("\n\tnot");
@@ -406,6 +379,4 @@ public class CodeGenerator {
             e.printStackTrace();
         }
     }
-
-
 }

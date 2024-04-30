@@ -168,6 +168,16 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
 
     /*
     execute[[FuncDefinition: definition -> type ID vardefinitions* statements* ]] =
+        int localVarsBytes = 0;
+        int parametersBytes = 0;
+        int bytesToReturn = ( (FunctionType) definition.getType()).getReturnType().numberOfBytes();
+
+        for(VarDefinition vardef : vardefinitions*)
+            localVarsBytes += vardef.getType().numberOfBytes();
+
+        for(VarDefinition param : ( (FunctionType) funcDefinition.getType()).getParams())
+            parametersBytes += param.getType().numberOfBytes();
+
         ID :
         int bytesLocals = vardefinition*.isEmpty() ? 0 : -vardefinition*.get(vardefinition*.size()-1).offset;
         <enter > bytesLocals
@@ -182,19 +192,22 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
             <enter > -vardefinition*.get(vardefinition*.size()-1).offset
 
         statements*.foreach(var -> execute[[stmt]])
+
+        if(type.returnType instanceof VoidType)
+		    <ret > bytesReturn <, > bytesLocals <, >  bytesArgs
     */
     @Override
     public Void visit(FuncDefinition v, ReturnBytes param) {
+        // Inherited attributes for the bytes that need to be returned
+        ReturnBytes finalParam = calculateBytes(v);
+
         cg.addLine(v.getLine());
         cg.addComment("\n\n " + v.getName() + ":");
 
         cg.addComment("\n\t' * Parameters");
-        v.getType().accept(this, param);
-
-        param = calculateBytes(v);
+        v.getType().accept(this, finalParam);
 
         cg.addComment("\n\t' * Local variables");
-        ReturnBytes finalParam = param;
         v.getVarDefinitions().forEach(vardef -> vardef.accept(this, finalParam));
 
         if (v.getVarDefinitions().size() > 0)
@@ -205,8 +218,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
         v.getStatements().forEach(stmt -> stmt.accept(this, finalParam));
 
         if(((FunctionType)v.getType()).getReturnType() instanceof VoidType)
-            cg.returnBytes(param);
-
+            cg.returnBytes(finalParam);
 
         return null;
     }
