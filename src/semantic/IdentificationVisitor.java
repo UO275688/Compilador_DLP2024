@@ -12,6 +12,19 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 
     private SymbolTable st = new SymbolTable();
 
+    /*
+    (P) FuncDefinition: definition: type ID vardef* statement*
+    (R)
+    if(!st.insert(definition))
+        new ErrorType("Already defined")
+
+    st.set // local scope
+    type.accept
+    vardef*foreach(v -> st.insert(v))
+    statement*foreach(v -> s.insert(v))
+
+    st.reset // scope deleted
+     */
     @Override
     public Void visit(FuncDefinition v, Void param) {
         // FuncDefinition already exists
@@ -35,6 +48,14 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
         return null;
     }
 
+    /*
+    (P) VarDefinition: definition -> type ID
+    (R)
+    if ( st.containsKey(ID) )
+	    new ErrorType(“Variable already defined”);
+
+    st.put( ID, definition ); // Add it to the map
+     */
     @Override
     public Void visit(VarDefinition v, Void param) {
         // Variable already defined
@@ -46,6 +67,14 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
         return null;
     }
 
+    /*
+    (P) Variable: expression -> ID
+    (R)
+    if( st.find(ID) == null)
+        new ErrorType("Variable is not defined")
+    Definition def = st.find(ID)
+    expression.definition = def
+     */
     @Override
     public Void visit(Variable v, Void param) {
         // Variable is NOT defined

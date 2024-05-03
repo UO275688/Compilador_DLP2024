@@ -36,37 +36,7 @@ public class LexerHelper {
 				System.out.println(e);
 			}
 		}
+
 		return str.charAt(1);
-
-
-
-		/*char[] chars = str.toCharArray();
-
-		if(chars[1] == '\\'){
-			if(chars[2] == 'n')
-				return '\n';
-			else if (chars[2] == 't')
-				return '\t';
-			else //ASCII
-				return (char) Character.getNumericValue(Integer.parseInt(str.substring(2, str.length()-1)));
-		}
-
-		return chars[1];
-
-		/*
-
-		if(str.length() == 3)
-			return str.charAt(1); // The second char is the digit o word
-
-		// Remove the apostrophes ('')
-		String charString = str.substring(1,str.length()-1);
-
-		if(charString.equals("\\n"))
-			return '\n';
-		else if(charString.equals("\\t"))
-			return '\t';
-		else
-			return (char) Integer.parseInt(charString.substring(1));*/
 	}
-
 }

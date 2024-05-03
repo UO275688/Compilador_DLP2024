@@ -1,4 +1,4 @@
-// Generated from C:/Users/mikel/Documents/UNIOVI/5 QUINTO/DLP/dlp/src/parser/Cmm.g4 by ANTLR 4.13.1
+// Generated from C:/Users/mikel/OneDrive - Universidad de Oviedo/Documentos/UNIOVI/5 QUINTO/DLP/dlp/src/parser/Cmm.g4 by ANTLR 4.13.1
 package parser;
 
     import ast.*;

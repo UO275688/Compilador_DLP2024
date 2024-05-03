@@ -111,7 +111,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         v.getType().accept(this, param);
         v.getVarDefinitions().forEach(var -> var.accept(this, param));
 
-        // Pass the return type as a parameter
+        // Pass the return type as a parameter, inherited attribute
         v.getStatements().forEach(stmt -> stmt.accept(this, ((FunctionType) v.getType()).getReturnType()));
 
         return null;
@@ -344,7 +344,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     @Override
     public Void visit(Return v, Type param) {
         v.getExpression().accept(this, param);
-        v.getExpression().setType(v.getExpression().getType().returnAs( param, v) );
+        v.getExpression().setType(v.getExpression().getType().returnAs( param, v) ); //inherited attribute
+
         return null;
     }
 

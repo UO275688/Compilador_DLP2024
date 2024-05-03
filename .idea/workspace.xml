@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="LAB 13 Code Generation III Fixed">
+    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="Minor details">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codegeneration/CodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/CodeGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codegeneration/ExecuteCGVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/ExecuteCGVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/Cmm.g4" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/Cmm.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/parser/LexerHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/parser/LexerHelper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/semantic/IdentificationVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/semantic/IdentificationVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/Cmm.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/Cmm.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/CmmLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/CmmLexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/CmmParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/CmmParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/LexerHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/LexerHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/IdentificationVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/IdentificationVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +148,16 @@
       <workItem from="1713862698084" duration="6156000" />
       <workItem from="1713878018954" duration="6068000" />
       <workItem from="1714411590339" duration="1279000" />
-      <workItem from="1714467581837" duration="6369000" />
+      <workItem from="1714467581837" duration="6474000" />
+      <workItem from="1714487972138" duration="2967000" />
+      <workItem from="1714495682382" duration="4240000" />
+      <workItem from="1714575217377" duration="4999000" />
+      <workItem from="1714582882061" duration="2924000" />
+      <workItem from="1714637639732" duration="5980000" />
+      <workItem from="1714646255375" duration="632000" />
+      <workItem from="1714657305791" duration="4535000" />
+      <workItem from="1714664500563" duration="2386000" />
+      <workItem from="1714728043201" duration="709000" />
     </task>
     <task id="LOCAL-00001" summary="LAB 8">
       <created>1711031244329</created>
@@ -220,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1714473695357</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Minor details">
+      <created>1714474493509</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1714474493509</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,7 +273,8 @@
     <MESSAGE value="LAB 12 Code Generation II Completed" />
     <MESSAGE value="LAB 13 Code Generation III Completed" />
     <MESSAGE value="LAB 13 Code Generation III Fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="LAB 13 Code Generation III Fixed" />
+    <MESSAGE value="Minor details" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor details" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

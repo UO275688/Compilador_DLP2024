@@ -1,4 +1,4 @@
-// Generated from C:/Users/mikel/Documents/UNIOVI/5 QUINTO/DLP/dlp/src/parser/Cmm.g4 by ANTLR 4.13.1
+// Generated from C:/Users/mikel/OneDrive - Universidad de Oviedo/Documentos/UNIOVI/5 QUINTO/DLP/dlp/src/parser/Cmm.g4 by ANTLR 4.13.1
 package parser;
 
     import ast.*;
@@ -1146,10 +1146,10 @@ public class CmmParser extends Parser {
 
 				                for(RecordField field : ((StructContext)_localctx).rf.ast) {
 				                    if(_localctx.names.contains(field.getName()))
-				                        new ErrorType(field.getLine(), field.getColumn(), String.format("Semantic ERROR: variable %s already defined in the scope.", field.getName(), field.getLine(), field.getColumn()));
+				                       new ErrorType(field.getLine(), field.getColumn(), String.format("Semantic ERROR: variable %s already defined in the scope.", field.getName(), field.getLine(), field.getColumn()));
 				                    else {
 				                        _localctx.names.add(field.getName());
-				                        _localctx.fields.add(field);
+				                         _localctx.fields.add(field);
 				                    }
 				                }
 				            

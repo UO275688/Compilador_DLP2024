@@ -36,7 +36,7 @@ expression returns [Expression ast]:
             }
         | e1=expression OP=('+'| '-') e2=expression
                     {$ast = new Arithmetic($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast, $e2.ast, $OP.text);}
-        | e1=expression OP=('>'| '>=' | '<' | '>=' | '<=' | '!=' | '==') e2=expression
+        | e1=expression OP=('>'| '>=' | '<' | '<=' | '!=' | '==') e2=expression
                     {$ast = new Comparator($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast, $e2.ast, $OP.text);}
         | e1=expression OP=('&&' | '||') e2=expression
                     {$ast = new Logical($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast, $e2.ast, $OP.text);}
@@ -70,7 +70,7 @@ functionInvocation returns [FuncInvocation ast] locals [List<Expression> express
         ID '(' (le=listExpressions {$expressions.addAll($le.ast);} )? ')'
             {$ast = new FuncInvocation($ID.getLine(), $ID.getCharPositionInLine()+1, new Variable($ID.getLine(), $ID.getCharPositionInLine()+1, $ID.text), $expressions);}
         ;
-        
+
 block returns [List<Statement> ast = new ArrayList<Statement>()]:
         s1=statements {$s1.ast.forEach(s -> $ast.add(s));}
         | '{' (s2=statements  {$s2.ast.forEach(s -> $ast.add(s));} )* '}'
@@ -102,10 +102,10 @@ struct returns [RecordType ast] locals [List<RecordField> fields = new ArrayList
             {
                 for(RecordField field : $rf.ast) {
                     if($names.contains(field.getName()))
-                        new ErrorType(field.getLine(), field.getColumn(), String.format("Semantic ERROR: variable %s already defined in the scope.", field.getName(), field.getLine(), field.getColumn()));
+                       new ErrorType(field.getLine(), field.getColumn(), String.format("Semantic ERROR: variable %s already defined in the scope.", field.getName(), field.getLine(), field.getColumn()));
                     else {
                         $names.add(field.getName());
-                        $fields.add(field);
+                         $fields.add(field);
                     }
                 }
             })+ '}'
