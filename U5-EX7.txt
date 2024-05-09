@@ -1,0 +1,20 @@
+
+struct{
+    double real;
+    char second;
+} [40] v;
+
+char a;
+double g;
+
+void main() {
+    char valor;
+    double doble;
+    v[34].second = '5';
+    a = '1';
+    g = 2.;
+
+    valor = v[' ' + 2].second;
+
+    write valor;
+}

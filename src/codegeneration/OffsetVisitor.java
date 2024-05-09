@@ -115,6 +115,8 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
             v.setOffset(- localBytesSum);
         }
 
+        f.getStatements().forEach(stmt -> stmt.accept(this, param));
+
         return null;
     }
 
@@ -139,6 +141,7 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 
         List<VarDefinition> params = v.getParams();
         for (int i = params.size() - 1; i >= 0; i--) {
+            params.get(i).accept(this, param);
             params.get(i).setOffset(paramBytesSum + 4);
             paramBytesSum += params.get(i).getType().numberOfBytes();
         }

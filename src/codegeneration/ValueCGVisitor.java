@@ -9,6 +9,7 @@ import ast.expressions.operators.Comparator;
 import ast.expressions.operators.Logical;
 import ast.expressions.operators.Modulus;
 import ast.expressions.unary.UnaryNot;
+import parser.LexerHelper;
 
 /*
 value[[IntLiteral: expression -> INT_CONSTANT]] =
@@ -28,7 +29,7 @@ value[[Variable: expression -> ID]] =
 	<load> expression.type.suffix()
 
 
-value[[Arithmetic: expression1 -> expression2 (+ | - | *) expression3]] =
+value[[Arithmetic: expression1 -> expression2 (+ | - | * | /) expression3]] =
 	value[[expression2]]
 	expression2.type.arithmeticConvertTo(expression1.type)
 	value[[expression3]]
@@ -158,7 +159,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
     }
 
     /*
-    value[[Arithmetic: expression1 -> expression2 (+ | - | *) expression3]] =
+    value[[Arithmetic: expression1 -> expression2 (+ | - | * | /) expression3]] =
         value[[expression2]]
         expression2.type.arithmeticConvertTo(expression1.type)
         value[[expression3]]
@@ -294,6 +295,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
     public Void visit(Indexing v, Void param) {
         v.accept(addressVisitor, param);
         cg.load(v.getType());
+
         return null;
     }
 
@@ -306,6 +308,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
     public Void visit(FieldAccess v, Void param) {
         v.accept(addressVisitor, param);
         cg.load(v.getType());
+
         return null;
     }
 
@@ -318,6 +321,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
     public Void visit(FuncInvocation v, Void param) {
         v.getParams().forEach(exp -> exp.accept(this, param));
         cg.callFunction(v.getVariable().getName());
+
         return null;
     }
 }

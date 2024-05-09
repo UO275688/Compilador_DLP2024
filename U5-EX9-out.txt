@@ -1,0 +1,339 @@
+
+#source	"U5-EX9.txt"
+
+	' * Global variables:
+	' * int i (offset 0)
+	' * int j (offset 2)
+	' * int n (offset 4)
+	' * char c (offset 6)
+
+' Invocation to the main function
+call main
+halt
+
+
+#line	2
+
+ p:
+	' * Parameters
+	' * Local variables
+	enter	0
+	ret	0, 0, 0
+
+#line	4
+
+ f:
+	' * Parameters
+	' * int n (offset 8)
+	' * real r (offset 4)
+	' * Local variables
+	' * real real (offset -4)
+	' * char c1 (offset -5)
+	' * char c2 (offset -6)
+	enter	6
+
+#line	7
+	push	bp
+	pushi	-5
+	addi
+	push	bp
+	pushi	8
+	addi
+	loadi
+	i2b
+	storeb
+
+#line	8
+	push	bp
+	pushi	-4
+	addi
+	push	bp
+	pushi	-5
+	addi
+	loadb
+	b2i
+	i2f
+	push	bp
+	pushi	8
+	addi
+	loadi
+	i2f
+	addf
+	push	bp
+	pushi	4
+	addi
+	loadf
+	addf
+	storef
+
+#line	9
+	call	p
+
+#line	10
+	' * Return
+	push	bp
+	pushi	-5
+	addi
+	loadb
+	b2i
+	ret	2, 6, 6
+
+#line	12
+
+ main:
+	' * Parameters
+	' * Local variables
+	' * record((integer x int)x(character x char)) pair (offset -3)
+	' * [10,[5,int]] vector (offset -103)
+	enter	103
+
+#line	18
+	pusha	0
+	pushi	0
+	storei
+
+#line	19
+	pusha	2
+	pushi	0
+	storei
+	' * While
+
+#line	20
+ label0:
+	pusha	0
+	loadi
+	pushi	10
+	lti
+	jz	label1
+	' * Body of the while statement
+	' * While
+
+#line	21
+ label2:
+	pusha	2
+	loadi
+	pushi	5
+	lti
+	jz	label3
+	' * Body of the while statement
+
+#line	22
+	push	bp
+	pushi	-103
+	addi
+	pusha	0
+	loadi
+	pushi	10
+	muli
+	addi
+	pusha	2
+	loadi
+	pushi	2
+	muli
+	addi
+	pusha	0
+	loadi
+	pusha	2
+	loadi
+	addi
+	storei
+
+#line	23
+	pusha	2
+	pusha	2
+	loadi
+	pushi	1
+	addi
+	storei
+	jmp	label2
+ label3:
+
+#line	25
+	pusha	0
+	pusha	0
+	loadi
+	pushi	1
+	addi
+	storei
+	jmp	label0
+ label1:
+
+#line	27
+	pusha	0
+	pushi	0
+	storei
+
+#line	28
+	push	bp
+	pushi	-3
+	addi
+	pushi	2
+	addi
+	pushb	48
+	storeb
+
+#line	29
+	push	bp
+	pushi	-3
+	addi
+	pushi	0
+	addi
+	pushi	48
+	storei
+	' * While
+
+#line	30
+ label4:
+	push	bp
+	pushi	-3
+	addi
+	pushi	0
+	addi
+	loadi
+	pusha	0
+	loadi
+	gei
+	jz	label5
+	' * Body of the while statement
+	' * If statement
+
+#line	31
+	push	bp
+	pushi	-3
+	addi
+	pushi	0
+	addi
+	loadi
+	push	bp
+	pushi	-103
+	addi
+	pushi	0
+	pushi	10
+	muli
+	addi
+	pushi	0
+	pushi	2
+	muli
+	addi
+	loadi
+	eqi
+	push	bp
+	pushi	-3
+	addi
+	pushi	2
+	addi
+	loadb
+	b2i
+	not
+	or
+	pusha	0
+	loadi
+	pushi	2
+	modi
+	pushi	0
+	eqi
+	or
+	jz	label6
+	' * Body of the if branch
+
+#line	32
+	' * Write
+	pushb	116
+	outb
+
+#line	32
+	' * Write
+	pushb	114
+	outb
+
+#line	32
+	' * Write
+	pushb	117
+	outb
+
+#line	32
+	' * Write
+	pushb	101
+	outb
+
+#line	32
+	' * Write
+	pushb	10
+	outb
+	jmp	label7
+ label6:
+	' * Body of the else branch
+
+#line	34
+	' * Write
+	pushb	102
+	outb
+
+#line	34
+	' * Write
+	pushb	97
+	outb
+
+#line	34
+	' * Write
+	pushb	108
+	outb
+
+#line	34
+	' * Write
+	pushb	115
+	outb
+
+#line	34
+	' * Write
+	pushb	101
+	outb
+
+#line	34
+	' * Write
+	pushb	10
+	outb
+ label7:
+
+#line	35
+	pusha	0
+	pusha	0
+	loadi
+	pushi	1
+	addi
+	storei
+	jmp	label4
+ label5:
+
+#line	37
+	' * Write
+	pusha	0
+	loadi
+	pusha	0
+	loadi
+	i2f
+	call	f
+	outi
+
+#line	38
+	push	bp
+	pushi	-103
+	addi
+	pushi	9
+	pushi	10
+	muli
+	addi
+	pushf	4.3
+	f2i
+	pushi	2
+	muli
+	addi
+	pushi	5
+	storei
+
+#line	39
+	pushi	1
+	pushf	2.2
+	call	f
+	popi
+	ret	0, 103, 0

@@ -23,7 +23,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
         if(t instanceof ErrorType) 	// instanceof is allowed
             return t;
 
-        return new ErrorType(t.getLine(), t.getColumn(), String.format("An arithmetic operation CANNOT be performed against types %s and %s", this, t));
+        return new ErrorType(t.getLine(), t.getColumn(), String.format("Semantic ERROR: an arithmetic operation CANNOT be performed against types %s and %s", this.getNameType(), t.getNameType()));
     }
 
     @Override
@@ -31,7 +31,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
         if(t instanceof ErrorType)
             return t;
 
-        return new ErrorType(t.getLine(), t.getColumn(), String.format("Semantic ERROR: a comparison operation CANNOT be performed between type %s and %s", this, t));
+        return new ErrorType(t.getLine(), t.getColumn(), String.format("Semantic ERROR: a comparison operation CANNOT be performed between type %s and %s", this.getNameType(), t.getNameType()));
     }
 
     @Override
@@ -39,7 +39,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
         if(t instanceof ErrorType)
             return t;
 
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("A logical operation CANNOT be performed against types %s and %s", this, t));
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: a logical operation CANNOT be performed against types %s and %s, ONLY IntTypes", this.getNameType(), t.getNameType()));
     }
 
     @Override
@@ -52,7 +52,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
         if(t instanceof ErrorType)
             return t;
 
-        return new ErrorType(t.getLine(), t.getColumn(), String.format("A modulus operation CANNOT be performed against types %s and %s", this, t));
+        return new ErrorType(t.getLine(), t.getColumn(), String.format("Semantic ERROR: a modulus operation CANNOT be performed against types %s and %s", this.getNameType(), t.getNameType()));
     }
 
     @Override
@@ -60,17 +60,17 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
         if(t instanceof ErrorType)
             return t;
 
-        return new ErrorType(t.getLine(), t.getColumn(), String.format("An indexing operation CANNOT be performed with the type %s.", this, t));
+        return new ErrorType(t.getLine(), t.getColumn(), String.format("Semantic ERROR: an indexing operation CANNOT be performed against type %s, ONLY array types.", this.getNameType()));
     }
 
     @Override
     public Type parenthesis(List<Type> types, ASTNode node) {
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("Function Invocation NOT valid."));
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: function Invocation NOT valid."));
     }
 
     @Override
     public Type dot(String s, ASTNode node) {
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("Field Access is NOT valid."));
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: field access is NOT valid."));
     }
 
     @Override
@@ -80,17 +80,17 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
 
     @Override
     public Type readable(ASTNode node) {
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: %s MUST be a built-in type to be read.", this));
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: %s MUST be a built-in type to be read.", this.getNameType()));
     }
 
     @Override
     public Type writable(ASTNode node) {
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: %s MUST be a built-in type to be written.", this));
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: %s MUST be a built-in type to be written.", this.getNameType()));
     }
 
     @Override
     public Type negative(ASTNode node) {
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: %s MUST be a built-in type to apply UnaryMinus.", this));
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: %s MUST be a built-in type to apply UnaryMinus.", this.getNameType()));
     }
 
     @Override
@@ -100,19 +100,18 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
 
     @Override
     public Type canBeCastTo(Type type) {
-        return new ErrorType(type.getLine(), type.getColumn(), String.format("Semantic ERROR: the type %s CANNOT be promoted.", type));
+        return new ErrorType(type.getLine(), type.getColumn(), String.format("Semantic ERROR: the type %s CANNOT be casted, ONLY built-in types.", this.getNameType()));
     }
 
     @Override
     public Type returnAs(Type t, ASTNode node) {
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the return type of the function %s CANNOT be returned as the expression type %s.", t, this));
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the return type of the function %s CANNOT be returned as the type %s.", t.getNameType(), this.getNameType()));
     }
 
     @Override
     public char getSuffix() {
-        ErrorType errorType = new ErrorType(getLine(), getColumn(), String.format("Code generation ERROR: CANNOT get the suffix of the type " + this));
+        ErrorType errorType = new ErrorType(getLine(), getColumn(), String.format("Code generation ERROR: CANNOT get the suffix of the type " + this.getNameType()));
         throw new IllegalStateException(errorType.toString());
-        // throw new IllegalStateException( "Line: " + getLine() + " column: " + getColumn() + " Code generation ERROR: CANNOT get the suffix of the type %s " + this);
     }
 
     @Override

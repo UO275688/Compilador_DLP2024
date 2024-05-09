@@ -1,0 +1,68 @@
+
+#source	"U5-EX7.txt"
+
+	' * Global variables:
+	' * [40,record((real x real)x(second x char))] v (offset 0)
+	' * char a (offset 200)
+	' * real g (offset 201)
+
+' Invocation to the main function
+call main
+halt
+
+
+#line	10
+
+ main:
+	' * Parameters
+	' * Local variables
+	' * char valor (offset -1)
+	' * real doble (offset -5)
+	enter	5
+
+#line	13
+	pusha	0
+	pushi	34
+	pushi	5
+	muli
+	addi
+	pushi	4
+	addi
+	pushb	53
+	storeb
+
+#line	14
+	pusha	200
+	pushb	49
+	storeb
+
+#line	15
+	pusha	201
+	pushf	2.0
+	storef
+
+#line	17
+	push	bp
+	pushi	-1
+	addi
+	pusha	0
+	pushb	32
+	b2i
+	pushi	2
+	addi
+	pushi	5
+	muli
+	addi
+	pushi	4
+	addi
+	loadb
+	storeb
+
+#line	19
+	' * Write
+	push	bp
+	pushi	-1
+	addi
+	loadb
+	outb
+	ret	0, 5, 0

@@ -18,13 +18,11 @@ public class IntType extends AbstractType implements Type, ASTNode {
     @Override
     public Type arithmetic(Type t) {
         if(t instanceof IntType)
-            return this; //return t; works as well, as both are IntType
-        if(t instanceof DoubleType)
-            return t;
+            return this;
         if(t instanceof ErrorType)
             return t;
 
-        return new ErrorType(t.getLine(), t.getColumn(), String.format("The type %s cannot be applied to an arithmetic operation", t));
+        return new ErrorType(t.getLine(), t.getColumn(), String.format("Semantic ERROR: an arithmetic operation CANNOT be performed against types %s and %s", this.getNameType(), t.getNameType()));
     }
 
     @Override
@@ -32,7 +30,7 @@ public class IntType extends AbstractType implements Type, ASTNode {
         if(t instanceof IntType)
             return this;
 
-        return new ErrorType(t.getLine(), t.getColumn(), String.format("The type %s CANNOT be applied to an comparison operation", t));
+        return new ErrorType(t.getLine(), t.getColumn(), String.format("Semantic ERROR: a comparison operation CANNOT be performed between type %s and %s", this.getNameType(), t.getNameType()));
     }
 
     @Override
@@ -42,7 +40,7 @@ public class IntType extends AbstractType implements Type, ASTNode {
         if(t instanceof ErrorType)
             return t;
 
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("The type %s CANNOT be applied to a logical operation.", t));
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: a logical operation CANNOT be applied to type %s, ONLY IntType.", t.getNameType()));
     }
 
     @Override
@@ -86,7 +84,7 @@ public class IntType extends AbstractType implements Type, ASTNode {
         if(t instanceof ErrorType)
             return t;
 
-        return new ErrorType(t.getLine(), t.getColumn(), String.format("The type %s CANNOT be applied to a modulus operation", t));
+        return new ErrorType(t.getLine(), t.getColumn(), String.format("Semantic ERROR: the type %s CANNOT be applied to a modulus operation", t.getNameType()));
     }
 
     @Override
@@ -100,7 +98,7 @@ public class IntType extends AbstractType implements Type, ASTNode {
         if(t instanceof ErrorType)
             return t;
 
-        return new ErrorType(t.getLine(), t.getColumn(), String.format("The type %s CANNOT be casted.", t));
+        return new ErrorType(t.getLine(), t.getColumn(), String.format("The type %s CANNOT be casted to %s.", this.getNameType(), t.getNameType()));
     }
 
     @Override
@@ -110,7 +108,7 @@ public class IntType extends AbstractType implements Type, ASTNode {
         if(t instanceof ErrorType)
             return t;
 
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the return type of the function %s CANNOT be returned as the expression type %s.", t, this));
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: the return type of the function %s CANNOT be returned as the type %s.", t.getNameType(), this.getNameType()));
     }
 
     @Override

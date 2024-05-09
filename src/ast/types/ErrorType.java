@@ -26,6 +26,11 @@ public class ErrorType extends AbstractType implements Type, ASTNode {
     }
 
     @Override
+    public String getNameType() {
+        return toString();
+    }
+
+    @Override
     public String toString() {
         return "ErrorType{" +
                 "line='" + getLine() +

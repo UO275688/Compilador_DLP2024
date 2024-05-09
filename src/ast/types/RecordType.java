@@ -51,13 +51,6 @@ public class RecordType extends AbstractType implements Type, ASTNode {
     }
 
     @Override
-    public boolean promotableTo(Type t) {
-        if(t instanceof RecordType)
-            return true;
-        return false;
-    }
-
-    @Override
     public String getNameType() {
         String fieldString = "";
         for(int i = 0; i < fields.size(); i++){

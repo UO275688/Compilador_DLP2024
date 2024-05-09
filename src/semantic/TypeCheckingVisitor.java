@@ -98,14 +98,14 @@ Expression2*.stream().map( exp -> exp.type ).toArray()
 --------------------------- DEFINITIONS
 
 (P) FuncDefinition: definition -> type ID definition* statement*
-(R) statement.forEach( stmt.returnType = type.returnType )
+(R) statement*.forEach( stmt.returnType = type.returnType )
 
  */
 // No longer generic because we instantiate them
 public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 
     /*(P) FuncDefinition: definition -> type ID definition* statement*
-    (R) statement.forEach( stmt.returnType = type.returnType )*/
+    (R) statement*.forEach( stmt.returnType = type.returnType )*/
     @Override
     public Void visit(FuncDefinition v, Type param) {
         v.getType().accept(this, param);
@@ -242,7 +242,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         v.setType(v.getExpression().getType().dot(v.getFieldName(), v.getExpression()));
 
         if(!v.getExpression().getLvalue())
-            new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic error: expression %s MUST be an lvalue", v.getExpression()));
+            new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: expression %s MUST be an lvalue", v.getExpression()));
 
         return null;
     }
@@ -287,7 +287,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     public Void visit(Variable v, Type param) {
         // Leaf node, no need to traverse
         v.setLvalue(true);
-        v.setType(v.getDefinition().getType()); // Variables are linked with their VarDefinition
+
+        // Variables are linked with their VarDefinition (IdentificationVisitor)
+        v.setType(v.getDefinition().getType());
 
         return null;
     }
@@ -297,16 +299,19 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     @Override
     public Void visit(Assignment v, Type param) {
         // Post-order traversal
-        v.getLeftExpression().accept(this, null);
-        v.getRightExpression().accept(this, null);
-        v.setLvalue(v.getLeftExpression().getLvalue());         // expression1.lvalue = expression2.lvalue
+        v.getLeftExpression().accept(this, param);
+        v.getRightExpression().accept(this, param);
+
+        // expression1.lvalue = expression2.lvalue
+        v.setLvalue(v.getLeftExpression().getLvalue());
 
         // MUST have the same built-in type and the left-hand side expression is an l-value.
         if (!v.getLeftExpression().getLvalue())
-            new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: expression %s is NOT be an lvalue.", v.getLeftExpression()));
+            new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: expression %s is NOT an lvalue.", v.getLeftExpression()));
 
+        // Check the value is promotable
         if( !v.getLeftExpression().getType().promotableTo(v.getRightExpression().getType()))
-            new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: assigning to expression %s the value %s, must be promotable to type %s.", v.getLeftExpression(), v.getRightExpression(), v.getLeftExpression().getType()));
+            new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: assigning to expression %s, type must be promotable to %s.", v.getLeftExpression(), v.getLeftExpression().getType().getNameType()));
 
         return null;
     }
@@ -318,7 +323,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         v.getExpression().accept(this, param);
 
         if (!v.getExpression().getLvalue())
-            new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: expression %s MUST be an lvalue.", v.getExpression()));
+            new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: expression %s MUST be an lvalue to be read.", v.getExpression()));
 
         v.getExpression().getType().readable(v.getExpression());
 
@@ -333,6 +338,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     public Void visit(IfElseStatement v, Type param) {
         v.getCondition().accept(this, param);
         v.getCondition().setType(v.getCondition().getType().logical(v.getCondition()));
+
         v.getIfStmt().forEach(stmt -> stmt.accept(this, param));
         v.getElseStmt().forEach(stmt -> stmt.accept(this, param));
 
@@ -344,7 +350,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     @Override
     public Void visit(Return v, Type param) {
         v.getExpression().accept(this, param);
-        v.getExpression().setType(v.getExpression().getType().returnAs( param, v) ); //inherited attribute
+
+        // Inherited attribute from FuncDefinion returnType
+        v.getExpression().setType(v.getExpression().getType().returnAs( param, v) );
 
         return null;
     }
@@ -356,6 +364,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     public Void visit(While v, Type param) {
         v.getCondition().accept(this, param);
         v.getCondition().setType(v.getCondition().getType().logical(v.getCondition()));
+
         v.getStatements().forEach(stmt -> stmt.accept(this, param));
 
         return null;

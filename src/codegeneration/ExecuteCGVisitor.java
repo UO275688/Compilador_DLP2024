@@ -13,18 +13,18 @@ import ast.types.VoidType;
 /*
 execute[[Read: statement -> expression]] =
 	value[[expression]]
-	<in> expression.type.suffix()
+	<in > expression.type.suffix()
 
 
 execute[[Write: statement -> expression]] =
 	value[[expression]]
-	<out> expression.type.suffix()
+	<out > expression.type.suffix()
 
 
 execute[[Assignment: statement -> expression1 expression2]] =
 	address[[expression1]]
 	value[[expression2]]
-	storei
+	<store > expression1.type.suffix()
 
 
 execute[[VarDefinition: definition -> type ID]] =
@@ -32,12 +32,33 @@ execute[[VarDefinition: definition -> type ID]] =
 
 
 execute[[FuncDefinition: definition -> type ID vardefinitions* statements* ]] =
+    int localVarsBytes = 0;
+    int parametersBytes = 0;
+    int bytesToReturn = ( (FunctionType) definition.getType()).getReturnType().numberOfBytes();
+
+    for(VarDefinition vardef : vardefinitions*)
+        localVarsBytes += vardef.getType().numberOfBytes();
+
+    for(VarDefinition param : ( (FunctionType) funcDefinition.getType()).getParams())
+        parametersBytes += param.getType().numberOfBytes();
+
+    ID :
+
+    ' * Parameters:
     execute[[type]]
-    for(Definition var : vardefinitions*)
-        execute[[var]]
-    for(Statement stmt : statements*)
-        execute[[stmt]]
-    <ret> type.returnFunctionBytes
+
+    ' * Local variables:
+    vardefinitions*.foreach(var -> execute[[var]])
+
+    if (vardefinition*.size() > 0)
+        <enter > localVarsBytes
+    else
+        <enter > 0
+
+    statements*.foreach(var -> execute[[stmt]])
+
+    if(type.returnType instanceof VoidType)
+	    <ret > bytesReturn <, > bytesLocals <, >  bytesArgs
 
 
 execute[[Program: program -> definition*]] =
@@ -53,22 +74,27 @@ execute[[Program: program -> definition*]] =
         if(fundef instanceof FuncDefinition)
             execute[[fundef]]
 
+
+execute[[FunctionType: type1 -> type2 vardefinitions*]] =
+        vardefinitions*.foreach(var -> execute[[var]])
+
+
 execute[[WhileStatement: statement -> exp statement*]] =
 	String conditionLabel = cg.nextLabel(), exitLabel = cg.nextLabel();
 	conditionLabel<:>
 		value[[exp]]
-		<jz> exitLabel
+		<jz > exitLabel
 		statement*.forEach(stmt -> execute[[stmt]])
-		<jmp> conditionLabel
+		<jmp > conditionLabel
 	exitLabel<:>
 
 
 execute[[IfElseStmt: statement1 -> expression statement2* statement3*]] =
 	String elseLabel = cg.nextLabel(), exitLabel = cg.nextLabel();
 		value[[expression]]
-		<jz> elseLabel
+		<jz > elseLabel
 		statement2*.forEach(s -> execute[[s]])
-		<jmp> exitLabel
+		<jmp > exitLabel
 	elseLabel<:>
 		statement3*.forEach(s -> execute[[s]])
 	exitLabel<:>
@@ -102,7 +128,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
     /*
     execute[[Read: statement -> expression]] =
         address[[expression]]
-        <in> expression.type.suffix()
+        <in > expression.type.suffix()
     */
     @Override
     public Void visit(Read v, ReturnBytes param) {
@@ -119,7 +145,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
     /*
     execute[[Write: statement -> expression]] =
         value[[expression]]
-        <out> expression.type.suffix()
+        <out > expression.type.suffix()
     */
     @Override
     public Void visit(Write v, ReturnBytes param) {
@@ -136,7 +162,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
     execute[[Assignment: statement -> expression1 expression2]] =
         address[[expression1]]
         value[[expression2]]
-        storei
+        <store > expression1.type.suffix()
     */
     @Override
     public Void visit(Assignment v, ReturnBytes param) {
@@ -151,7 +177,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
 
     /*
     execute[[VarDefinition: definition -> type ID]] =
-        ´ * type.toString() ID ( offset vardefinition.offset )
+        <´ * > type.toString() ID <(> offset vardefinition.offset <)>
     */
     @Override
     public Void visit(VarDefinition v, ReturnBytes param) {
@@ -170,7 +196,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
     execute[[FuncDefinition: definition -> type ID vardefinitions* statements* ]] =
         int localVarsBytes = 0;
         int parametersBytes = 0;
-        int bytesToReturn = ( (FunctionType) definition.getType()).getReturnType().numberOfBytes();
+        int bytesToReturn = type.returnType.numberOfBytes();
 
         for(VarDefinition vardef : vardefinitions*)
             localVarsBytes += vardef.getType().numberOfBytes();
@@ -179,8 +205,6 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
             parametersBytes += param.getType().numberOfBytes();
 
         ID :
-        int bytesLocals = vardefinition*.isEmpty() ? 0 : -vardefinition*.get(vardefinition*.size()-1).offset;
-        <enter > bytesLocals
 
         ' * Parameters:
         execute[[type]]
@@ -189,7 +213,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
         vardefinitions*.foreach(var -> execute[[var]])
 
         if (vardefinition*.size() > 0)
-            <enter > -vardefinition*.get(vardefinition*.size()-1).offset
+            <enter > localVarsBytes
+        else
+            <enter > 0
 
         statements*.foreach(var -> execute[[stmt]])
 
@@ -211,13 +237,14 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
         v.getVarDefinitions().forEach(vardef -> vardef.accept(this, finalParam));
 
         if (v.getVarDefinitions().size() > 0)
-            cg.enter(-v.getVarDefinitions().get(v.getVarDefinitions().size()-1).getOffset());
+            cg.enter(finalParam.getBytesLocals());
+            //cg.enter( - v.getVarDefinitions().get(v.getVarDefinitions().size()-1).getOffset() );
         else
             cg.enter(0);
 
         v.getStatements().forEach(stmt -> stmt.accept(this, finalParam));
 
-        if(((FunctionType)v.getType()).getReturnType() instanceof VoidType)
+        if( ((FunctionType)v.getType()).getReturnType() instanceof VoidType )
             cg.returnBytes(finalParam);
 
         return null;
@@ -239,7 +266,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
 
     /*
     execute[[Program: program -> definition*]] =
-    ´ * Global variables:
+    <´ * > Global variables:
     for(Definition vardef : definition*)
         if(vardef instanceof VarDefinition)
             execute[[vardef]]
@@ -269,10 +296,13 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
         return null;
     }
 
+    /*
+    execute[[FunctionType: type1 -> type2 vardefinitions*]] =
+        vardefinitions*.foreach(var -> execute[[var]])
+     */
     @Override
     public Void visit(FunctionType v, ReturnBytes param) {
-        for(VarDefinition var : v.getParams())
-            var.accept(this, param);
+        v.getParams().forEach(var -> var.accept(this, param));
 
         return null;
     }
@@ -282,9 +312,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
         String conditionLabel = cg.nextLabel(), exitLabel = cg.nextLabel();
         conditionLabel<:>
             value[[exp]]
-            <jz> exitLabel
+            <jz > exitLabel
             statement*.forEach(stmt -> execute[[stmt]])
-            <jmp> conditionLabel
+            <jmp > conditionLabel
         exitLabel<:>
      */
     @Override
@@ -308,9 +338,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
     execute[[IfElseStmt: statement1 -> expression statement2* statement3*]] =
         String elseLabel = cg.nextLabel(), exitLabel = cg.nextLabel();
             value[[expression]]
-            <jz> elseLabel
+            <jz > elseLabel
             statement2*.forEach(s -> execute[[s]])
-            <jmp> exitLabel
+            <jmp > exitLabel
         elseLabel<:>
             statement3*.forEach(s -> execute[[s]])
         exitLabel<:>
@@ -338,7 +368,6 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
 
 
     /*
-    We pop when it is a statement and the return type of the function is NOT Void
     We can call one or another the type of the parent:
     V write f();
     V a + f();
@@ -356,6 +385,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
         v.getParams().forEach(exp -> exp.accept(valueVisitor, null));
         cg.callFunction(v.getVariable().getName());
 
+        // Clear the top of the stack (pop), when it is returning something,
+        // meaning the function is NOT Void
         if(! (v.getType() instanceof VoidType) )
             cg.popi();
 

@@ -44,12 +44,19 @@ public class ArrayType extends AbstractType implements Type, ASTNode {
 
     @Override
     public Type squareBrackets(Type t) {
-        if(t instanceof IntType)
+        if(t instanceof IntType) {
+            // Check bounds
+            /*
+            if( t.  >= getSize())
+                new ErrorType(t.getLine(), t.getColumn(), String.format("Semantic ERROR: index out of bounds."));
+            */
+
             return this.type;
+        }
         if(t instanceof ErrorType)
             return t;
 
-        return new ErrorType(t.getLine(), t.getColumn(), String.format("The type %s CANNOT be an indexing operation (must be int)", t));
+        return new ErrorType(t.getLine(), t.getColumn(), String.format("The type %s CANNOT be an indexing value, must be int.", t.getNameType()));
     }
 
     @Override
