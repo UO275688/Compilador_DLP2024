@@ -54,14 +54,17 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void>{
         else {
             <push bp>
             <pushi > expression.definition.offset
-            <addi >
+            <addi>
         }
     */
     @Override
     public Void visit(Variable v, Void param) {
+        // Global variables
         if (v.getDefinition().getScope() == 0)
             cg.pusha( ((VarDefinition) v.getDefinition()).getOffset() );
-        else{
+
+        // Local variables
+        else {
            cg.pushBP();
            cg.pushi(((VarDefinition) v.getDefinition()).getOffset());
            cg.addi();

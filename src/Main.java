@@ -45,12 +45,19 @@ public class Main {
 
 		if (ErrorHandler.getInstance().anyErrors())
 			ErrorHandler.getInstance().showErrors(System.err);
+
 		else {
-			// * The AST is shown if no errors exist
 			ast.accept(new ExecuteCGVisitor(new CodeGenerator(inputFile, output)), null);
-			IntrospectorModel model=new IntrospectorModel(
-					"Program", ast);
-			new IntrospectorView("Introspector", model);
+
+			if (ErrorHandler.getInstance().anyErrors())
+				ErrorHandler.getInstance().showErrors(System.err);
+
+			else {
+				// * The AST is shown if no errors exist
+				IntrospectorModel model = new IntrospectorModel(
+						"Program", ast);
+				new IntrospectorView("Introspector", model);
+			}
 		}
 	}
 }

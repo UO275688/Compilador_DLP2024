@@ -44,15 +44,8 @@ public class ArrayType extends AbstractType implements Type, ASTNode {
 
     @Override
     public Type squareBrackets(Type t) {
-        if(t instanceof IntType) {
-            // Check bounds
-            /*
-            if( t.  >= getSize())
-                new ErrorType(t.getLine(), t.getColumn(), String.format("Semantic ERROR: index out of bounds."));
-            */
-
+        if(t instanceof IntType)
             return this.type;
-        }
         if(t instanceof ErrorType)
             return t;
 

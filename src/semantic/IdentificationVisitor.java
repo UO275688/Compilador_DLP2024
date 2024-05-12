@@ -21,7 +21,7 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
         st.set // local scope
         type.accept
         vardef*foreach(v -> st.insert(v))
-        statement*foreach(v -> s.insert(v))
+        statement*foreach(v -> v.accept())
 
         st.reset // scope deleted
      */

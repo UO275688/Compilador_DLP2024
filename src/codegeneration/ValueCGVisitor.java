@@ -9,7 +9,8 @@ import ast.expressions.operators.Comparator;
 import ast.expressions.operators.Logical;
 import ast.expressions.operators.Modulus;
 import ast.expressions.unary.UnaryNot;
-import parser.LexerHelper;
+import ast.types.ArrayType;
+import ast.types.ErrorType;
 
 /*
 value[[IntLiteral: expression -> INT_CONSTANT]] =
@@ -107,9 +108,9 @@ value[[FuncInvocation: expression1 → expression2 expression3*]] =
  */
 public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
-    private CodeGenerator cg;
+    private final CodeGenerator cg;
 
-    private AddressCGVisitor addressVisitor;
+    private final AddressCGVisitor addressVisitor;
 
     public ValueCGVisitor(CodeGenerator codeGenerator, AddressCGVisitor addressVisitor){
         this.cg = codeGenerator;
@@ -187,11 +188,11 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /*
     value[[Modulus: expression1 -> expression2 % expression3]] =
-	value[[expression2]]
-	expression2.type.arithmeticConvertTo(expression1.type)
-	value[[expression3]]
-	expression3.type.arithmeticConvertTo(expression1.type)
-	<modi>
+        value[[expression2]]
+        expression2.type.arithmeticConvertTo(expression1.type)
+        value[[expression3]]
+        expression3.type.arithmeticConvertTo(expression1.type)
+        <modi>
     */
     @Override
     public Void visit(Modulus v, Void param) {
@@ -208,23 +209,19 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /*
     value[[Comparison: expression1 -> expression2 (> | < | >= | <= | == | !=) expression3]] =
-	value[[expression2]]
-	expression2.type.superType(expression1.type)
-	value[[expression3]]
-	expression3.type.superType(expression1.type)
-	switch (expression1.operator) {
-		case ">" : <gt > expression1.type.suffix()  break;
-		case "<" : <lt > expression1.type.suffix() break;
-		case ">=" : <ge > expression1.type.suffix() break;
-		case "<=" : <le > expression1.type.suffix() break;
-		case "==" : <eq > expression1.type.suffix() break;
-		case "!=" : <ne > expression1.type.suffix() break;
-		default: assert false;
-	}
-
-     C C = I	I
-     I I = I	I
-     F F = I	F compares float but returns an integer
+        value[[expression2]]
+        expression2.type.superType(expression1.type)
+        value[[expression3]]
+        expression3.type.superType(expression1.type)
+        switch (expression1.operator) {
+            case ">" : <gt > expression1.type.suffix()  break;
+            case "<" : <lt > expression1.type.suffix() break;
+            case ">=" : <ge > expression1.type.suffix() break;
+            case "<=" : <le > expression1.type.suffix() break;
+            case "==" : <eq > expression1.type.suffix() break;
+            case "!=" : <ne > expression1.type.suffix() break;
+            default: assert false;
+        }
     */
     @Override
     public Void visit(Comparator v, Void param) {
@@ -241,20 +238,21 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /*
     value[[Logical: expression1 -> expression2 (&& | ||) expression3]] =
-	value[[expression2]]
-	value[[expression3]]
-	switch (expression1.operator) {
-		case “&&”: <and>
-				break;
-		case “||”: <or>
-				break;
-		default: assert false;
-	}
+        value[[expression2]]
+        value[[expression3]]
+        switch (expression1.operator) {
+            case “&&”: <and>
+                    break;
+            case “||”: <or>
+                    break;
+            default: assert false;
+        }
      */
     @Override
     public Void visit(Logical v, Void param) {
         v.getLeft().accept(this, param);
         v.getRight().accept(this, param);
+
         cg.logical(v.getOperator());
 
         return null;
@@ -262,12 +260,13 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /*
     value[[Cast: expression1 -> type expression2]] =
-	value[[expression2]]
-	expression2.type.castTo(type)
+        value[[expression2]]
+        expression2.type.castTo(type)
      */
     @Override
     public Void visit(Cast v, Void param) {
         v.getExpression().accept(this, param);
+
         cg.castTo(v.getExpression().getType(), v.getCastType());
 
         return null;
@@ -275,12 +274,13 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
     /*
     value[[UnaryNot: expression1 -> expression2]] =
-    value[[expression2]]
-    <not>
+        value[[expression2]]
+        <not>
      */
     @Override
     public Void visit(UnaryNot v, Void param) {
         v.getExpression().accept(this, param);
+
         cg.unaryNot();
 
         return null;
@@ -294,7 +294,18 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
     @Override
     public Void visit(Indexing v, Void param) {
         v.accept(addressVisitor, param);
+
         cg.load(v.getType());
+
+        // Check the index bounds of the array size
+        int size = ((ArrayType) v.getExpressionLeft().getType()).getSize();
+
+        try {
+            if (((IntLiteral) v.getExpressionRight()).getValue() >=  size || ((IntLiteral) v.getExpressionRight()).getValue() < 0)
+                new ErrorType(v.getLine(), v.getColumn(), String.format("Code generation ERROR: index out of bounds, the size is %s", size));
+        } catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
 
         return null;
     }
@@ -307,6 +318,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
     @Override
     public Void visit(FieldAccess v, Void param) {
         v.accept(addressVisitor, param);
+
         cg.load(v.getType());
 
         return null;
@@ -320,6 +332,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
     @Override
     public Void visit(FuncInvocation v, Void param) {
         v.getParams().forEach(exp -> exp.accept(this, param));
+
         cg.callFunction(v.getVariable().getName());
 
         return null;

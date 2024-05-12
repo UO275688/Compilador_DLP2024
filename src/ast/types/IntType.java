@@ -40,7 +40,7 @@ public class IntType extends AbstractType implements Type, ASTNode {
         if(t instanceof ErrorType)
             return t;
 
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: a logical operation CANNOT be applied to type %s, ONLY IntType.", t.getNameType()));
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: a logical operation CANNOT be applied to type %s, ONLY int.", t.getNameType()));
     }
 
     @Override

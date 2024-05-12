@@ -25,13 +25,13 @@ import ast.types.*;
 
 (P) FuncInvocation: expression1 -> expression2 expression3*
 (R) expression1.type = expression2.type.parenthesis(
-expression3*.stream().map( exp -> exp.type ).toArray()
-)
+        expression3*.stream().map( exp -> exp.type ).toArray()
+    )
 
 (P) FuncInvocation: statement -> expression1 expression2*
 (R) expression1.type.parenthesis(
-Expression2*.stream().map( exp -> exp.type ).toArray()
-)
+        expression2*.stream().map( exp -> exp.type ).toArray()
+    )
 
 (P) Indexing: expression1 -> expression2 expression3
 (R) expression1.type = expression2.type.squareBrackets(expression3.type)
@@ -67,7 +67,7 @@ Expression2*.stream().map( exp -> exp.type ).toArray()
 --------------------------- UNARY
 
 (P) UnaryMinus: expression1 -> expression2
-(R) expression1.type = expression2.type.negation()
+(R) expression1.type = expression2.type.negative()
 
 (P) UnaryNot: expression1 -> expression2
 (R) expression1.type = expression2.type.negation()
@@ -200,7 +200,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     }
 
     /*(P) UnaryMinus: expression1 -> expression2
-    (R) expression1.type = expression2.type.negation()*/
+    (R) expression1.type = expression2.type.negative()*/
     @Override
     public Void visit(UnaryMinus v, Type param) {
         v.getExpression().accept(this, param);
@@ -242,7 +242,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         v.setType(v.getExpression().getType().dot(v.getFieldName(), v.getExpression()));
 
         if(!v.getExpression().getLvalue())
-            new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: expression %s MUST be an lvalue", v.getExpression()));
+            new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: field access expression %s MUST be an lvalue", v.getExpression()));
 
         return null;
     }

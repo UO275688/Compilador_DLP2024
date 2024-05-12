@@ -14,6 +14,7 @@ import ast.types.VoidType;
 execute[[Read: statement -> expression]] =
 	value[[expression]]
 	<in > expression.type.suffix()
+    <store > expression.type.suffix()
 
 
 execute[[Write: statement -> expression]] =
@@ -129,6 +130,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
     execute[[Read: statement -> expression]] =
         address[[expression]]
         <in > expression.type.suffix()
+        <store > expression.type.suffix()
     */
     @Override
     public Void visit(Read v, ReturnBytes param) {
@@ -136,6 +138,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
         cg.addComment("\n\t' * Read");
 
         v.getExpression().accept(this.addressVisitor, null);
+
         cg.read(v.getExpression().getType());
         cg.store(v.getExpression().getType());
 
@@ -170,6 +173,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
 
         v.getLeftExpression().accept(this.addressVisitor , null);
         v.getRightExpression().accept(this.valueVisitor , null);
+
         cg.store(v.getLeftExpression().getType());
 
         return null;
@@ -181,13 +185,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
     */
     @Override
     public Void visit(VarDefinition v, ReturnBytes param) {
-        // Global scope
-        if(v.getScope() == 0)
-            cg.addComment("\n\t' * " + v.getType().getNameType() + " " + v.getName() + " (offset " + v.getOffset() + ")");
-
-        // Local scope
-        else if (v.getScope() > 0)
-            cg.addComment("\n\t' * " + v.getType().getNameType() + " " + v.getName() + " (offset " + v.getOffset() + ")");
+        cg.addComment("\n\t' * " + v.getType().getNameType() + " " + v.getName() + " (offset " + v.getOffset() + ")");
 
         return null;
     }
@@ -236,6 +234,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
         cg.addComment("\n\t' * Local variables");
         v.getVarDefinitions().forEach(vardef -> vardef.accept(this, finalParam));
 
+        // Allocate bytes for the local variables
         if (v.getVarDefinitions().size() > 0)
             cg.enter(finalParam.getBytesLocals());
             //cg.enter( - v.getVarDefinitions().get(v.getVarDefinitions().size()-1).getOffset() );
@@ -266,27 +265,27 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
 
     /*
     execute[[Program: program -> definition*]] =
-    <´ * > Global variables:
-    for(Definition vardef : definition*)
-        if(vardef instanceof VarDefinition)
-            execute[[vardef]]
+        <´ * > Global variables:
+        for(Definition vardef : definition*)
+            if(vardef instanceof VarDefinition)
+                execute[[vardef]]
 
-    <call main>
-	<halt>
+        <call main>
+        <halt>
 
-	for(Definition fundef : definition*)
-        if(fundef instanceof FuncDefinition)
-            execute[[fundef]]
+        for(Definition fundef : definition*)
+            if(fundef instanceof FuncDefinition)
+                execute[[fundef]]
      */
     @Override
     public Void visit(Program v, ReturnBytes param) {
         cg.addSource();
         cg.addComment("\n\n\t' * Global variables:");
 
-        for(Definition vardef : v.getDefinitions()) {
+        for(Definition vardef : v.getDefinitions())
             if (vardef instanceof VarDefinition varDefinition)
                 varDefinition.accept(this, param);
-        }
+
         cg.callMain();
 
         for(Definition fundef : v.getDefinitions())
@@ -323,9 +322,11 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
         cg.addLine(v.getLine());
 
         String conditionLabel = cg.nextLabel(), exitLabel = cg.nextLabel();
+
         cg.addLabel(conditionLabel);
         v.getCondition().accept(valueVisitor, null);
         cg.jz(exitLabel);
+
         cg.addComment("\n\t' * Body of the while statement");
         v.getStatements().forEach(stmt -> stmt.accept(this, param));
         cg.jmp(conditionLabel);
@@ -353,8 +354,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
         String elseLabel = cg.nextLabel(), exitLabel = cg.nextLabel();
         v.getCondition().accept(valueVisitor, null);
         cg.jz(elseLabel);
-        cg.addComment("\n\t' * Body of the if branch");
 
+        cg.addComment("\n\t' * Body of the if branch");
         v.getIfStmt().forEach(stmt -> stmt.accept(this, param));
         cg.jmp(exitLabel);
         cg.addLabel(elseLabel);
@@ -382,6 +383,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
     @Override
     public Void visit(FuncInvocation v, ReturnBytes param) {
         cg.addLine(v.getLine());
+
         v.getParams().forEach(exp -> exp.accept(valueVisitor, null));
         cg.callFunction(v.getVariable().getName());
 
@@ -402,8 +404,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
     public Void visit(Return v, ReturnBytes param) {
         cg.addLine(v.getLine());
         cg.addComment("\n\t' * Return");
+
         v.getExpression().accept(valueVisitor, null);
-        cg.returnBytes(param);
+        cg.returnBytes(param); // inherited from FuncDefinition
 
         return null;
     }

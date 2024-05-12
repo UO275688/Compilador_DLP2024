@@ -8,9 +8,9 @@ import java.io.IOException;
 
 public class CodeGenerator {
 
-    private FileWriter out;
+    private final FileWriter out;
 
-    private String inputFile;
+    private final String inputFile;
 
     private int labels = 0;
 
@@ -228,11 +228,6 @@ public class CodeGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void modulusConvertTo(Type type, Type intType) {
-        if(type instanceof CharType)
-            castTo(type, intType);
     }
 
     public void comparator(String operator, Type type) {

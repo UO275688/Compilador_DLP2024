@@ -39,7 +39,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
         if(t instanceof ErrorType)
             return t;
 
-        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: a logical operation CANNOT be performed against types %s and %s, ONLY IntTypes", this.getNameType(), t.getNameType()));
+        return new ErrorType(node.getLine(), node.getColumn(), String.format("Semantic ERROR: a logical operation CANNOT be performed against types %s and %s, ONLY int", this.getNameType(), t.getNameType()));
     }
 
     @Override
