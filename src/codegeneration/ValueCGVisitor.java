@@ -241,10 +241,8 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
         value[[expression2]]
         value[[expression3]]
         switch (expression1.operator) {
-            case “&&”: <and>
-                    break;
-            case “||”: <or>
-                    break;
+            case “&&”: <and> break;
+            case “||”: <or> break;
             default: assert false;
         }
      */
@@ -302,7 +300,7 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
         try {
             if (((IntLiteral) v.getExpressionRight()).getValue() >=  size || ((IntLiteral) v.getExpressionRight()).getValue() < 0)
-                new ErrorType(v.getLine(), v.getColumn(), String.format("Code generation ERROR: index out of bounds, the size is %s", size));
+                new ErrorType(v.getLine(), v.getColumn(), String.format("Semantic ERROR: index out of bounds, the size is %s", size));
         } catch (IndexOutOfBoundsException e){
             e.printStackTrace();
         }

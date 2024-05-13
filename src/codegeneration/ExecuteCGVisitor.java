@@ -181,7 +181,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
 
     /*
     execute[[VarDefinition: definition -> type ID]] =
-        <´ * > type.toString() ID <(> offset vardefinition.offset <)>
+        <´ * > type.toString() ID <(> offset definition.offset <)>
     */
     @Override
     public Void visit(VarDefinition v, ReturnBytes param) {
@@ -199,7 +199,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<ReturnBytes, Void>{
         for(VarDefinition vardef : vardefinitions*)
             localVarsBytes += vardef.getType().numberOfBytes();
 
-        for(VarDefinition param : ( (FunctionType) funcDefinition.getType()).getParams())
+        for(VarDefinition param : type.getParams())
             parametersBytes += param.getType().numberOfBytes();
 
         ID :

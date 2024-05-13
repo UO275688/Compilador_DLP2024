@@ -7,8 +7,6 @@ import java.util.List;
 
 public abstract class AbstractType extends AbstractASTNode implements Type{
 
-    private int offset;
-
     public AbstractType(int line, int column) {
         super(line, column);
     }
@@ -117,14 +115,6 @@ public abstract class AbstractType extends AbstractASTNode implements Type{
     @Override
     public int numberOfBytes() {
         return 0;
-    }
-
-    public void setOffset(int offset){
-        this.offset = offset;
-    }
-
-    public int getOffset(){
-        return offset;
     }
 
     @Override

@@ -10,6 +10,8 @@ public class RecordField extends AbstractType implements ASTNode {
 
     private String name;
 
+    private int offset;
+
     public RecordField(int line, int column, Type type, String name) {
         super(line, column);
         this.type = type;
@@ -22,6 +24,14 @@ public class RecordField extends AbstractType implements ASTNode {
 
     public String getName() {
         return name;
+    }
+
+    public void setOffset(int offset){
+        this.offset = offset;
+    }
+
+    public int getOffset(){
+        return offset;
     }
 
     @Override
