@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="Improvements V2">
+    <list default="true" id="1e9c5f42-6fd0-4513-8e7a-649b09f54407" name="Changes" comment="Improvements V3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dlp/semantic/TypeCheckingVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/semantic/TypeCheckingVisitor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/RecordField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/RecordField.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ast/types/AbstractType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/AbstractType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codegeneration/ExecuteCGVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/ExecuteCGVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codegeneration/OffsetVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/OffsetVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codegeneration/ValueCGVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codegeneration/ValueCGVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/TypeCheckingVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dlp/ast/RecordField.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dlp/ast/RecordField.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/CharType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/CharType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/DoubleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/DoubleType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast/types/IntType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast/types/IntType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +176,15 @@
       <workItem from="1715435622440" duration="112000" />
       <workItem from="1715524216480" duration="2221000" />
       <workItem from="1715532239389" duration="1170000" />
-      <workItem from="1715606844067" duration="3752000" />
+      <workItem from="1715606844067" duration="5631000" />
+      <workItem from="1715761032392" duration="860000" />
+      <workItem from="1715769731966" duration="3782000" />
+      <workItem from="1716456106956" duration="3567000" />
+      <workItem from="1716469735317" duration="1130000" />
+      <workItem from="1716479347977" duration="438000" />
+      <workItem from="1716481344117" duration="669000" />
+      <workItem from="1716563462661" duration="1586000" />
+      <workItem from="1716629602379" duration="2716000" />
     </task>
     <task id="LOCAL-00001" summary="LAB 8">
       <created>1711031244329</created>
@@ -286,7 +291,14 @@
       <option name="project" value="LOCAL" />
       <updated>1715532317132</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Improvements V3">
+      <created>1715613381224</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1715613381224</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,7 +333,8 @@
     <MESSAGE value="Minor changes" />
     <MESSAGE value="Improvements" />
     <MESSAGE value="Improvements V2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improvements V2" />
+    <MESSAGE value="Improvements V3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improvements V3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

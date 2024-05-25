@@ -32,6 +32,7 @@ public class DoubleType extends AbstractType implements Type, ASTNode {
         return new ErrorType(t.getLine(), t.getColumn(), String.format("Semantic ERROR: a comparison operation CANNOT be performed between type %s and %s", this.getNameType(), t.getNameType()));
     }
 
+    // Double no promociona a nada
     @Override
     public boolean promotableTo(Type t) {
         if(t instanceof DoubleType)

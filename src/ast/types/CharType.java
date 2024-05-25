@@ -47,6 +47,7 @@ public class CharType extends AbstractType implements Type, ASTNode {
         return new ErrorType(t.getLine(), t.getColumn(), String.format("Semantic ERROR: the type %s CANNOT be applied to a modulus operation", t.getNameType()));
     }
 
+    // Char promociona a Int y a Double (en 2 pasos)
     @Override
     public boolean promotableTo(Type t) {
         if(t instanceof CharType)

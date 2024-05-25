@@ -48,6 +48,7 @@ public class IntType extends AbstractType implements Type, ASTNode {
         return this;
     }
 
+    // Int promociona a Double
     @Override
     public boolean promotableTo(Type t) {
         if(t instanceof IntType)
